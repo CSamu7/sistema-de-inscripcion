@@ -32,13 +32,13 @@ Instalar todas las dependencias:
 3. Javascript
 
 ## Backend
-1. Node.js 18.15.0
-  1.1 mysql2 3.2.0
-  1.2 nodemon 2.0.22
-  1.3 express 4.18.2
-  1.4 cors 2.8.5
-  1.5 dotenv 16.0.3
-  1.6 jose 4.14.4
+- Node.js 18.15.0
+  - mysql2 3.2.0
+  - nodemon 2.0.22
+  - express 4.18.2
+  - cors 2.8.5
+  - dotenv 16.0.3
+  - jose 4.14.4
 
 ## Base de datos
 1. MySQL

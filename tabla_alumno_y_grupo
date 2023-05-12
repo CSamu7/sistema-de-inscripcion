@@ -1,0 +1,20 @@
+CREATE TABLE `grupo` (
+  `#Grupo` int NOT NULL,
+  `Cantidad_alumnos` int NOT NULL,
+  `#Cuenta_alumnos` int NOT NULL,
+  `Cupo` int NOT NULL,
+  PRIMARY KEY (`#Grupo`),
+  UNIQUE KEY `#Grupo_UNIQUE` (`#Grupo`)
+) 
+
+CREATE TABLE `alumnos` (
+  `#Cuenta` int NOT NULL,
+  `Contraseña` int NOT NULL,
+  `Nombre` varchar(15) NOT NULL,
+  `Segundo Nombre` varchar(15) DEFAULT NULL,
+  `Apellido paterno` varchar(20) NOT NULL,
+  `Apellido materno` varchar(20) NOT NULL,
+  `Admin` tinyint(1) NOT NULL,
+  PRIMARY KEY (`#Cuenta`),
+  UNIQUE KEY `#Cuenta_UNIQUE` (`#Cuenta`)
+)

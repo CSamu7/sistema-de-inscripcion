@@ -1,9 +1,16 @@
 const express = require("express");
-const { getUser, postUser } = require("../controller/userController");
+const {
+  consultarUsuario,
+  autenticarUsuario,
+} = require("../controller/userController");
+const multer = require("multer");
+const validarLoginDTO = require("../dto/dto-user");
 
-const userRouter = express.Router();
+const usuarioRouter = express.Router();
 
-userRouter.get("/", getUser);
-userRouter.post("/", postUser);
+usuarioRouter.get("/:iduser", consultarUsuario);
 
-module.exports = userRouter;
+usuarioRouter.post("/", [multer().none(), validarLoginDTO]);
+usuarioRouter.post("/", autenticarUsuario);
+
+module.exports = usuarioRouter;

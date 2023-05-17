@@ -1,5 +1,5 @@
 const form = document.getElementById('form');
-const mensaje = document.querySelector('p');
+const notificacion = document.getElementById('notificacion');
 
 form.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -12,14 +12,17 @@ const enviarFormulario = async () => {
   const numeroDeCuenta = formData.get('numeroDeCuenta');
   const contra = formData.get('contra');
 
-  validarCampos(numeroDeCuenta, contra);
+  const datosSonValidos = validarCampos(numeroDeCuenta, contra);
+
+  if (!datosSonValidos) return;
 
   const solicitud = await getDatos('http://localhost:3000/api/v1/user/', {
     method: 'POST',
     body: formData
   });
 
-  console.log(solicitud);
+  notificacion.classList.remove('invisible');
+  notificacion.textContent = 'Has ingresado al sistema';
 
   return solicitud;
 };
@@ -28,9 +31,13 @@ const validarCampos = (numero, pass) => {
   try {
     verificarNumeroValido(numero);
     verificarEspaciosVacios(pass);
-    verificarTamanioString(pass);
+
+    return true;
   } catch (err) {
-    mensaje.textContent = 'Verifica el numero de cuenta o la contraseña';
+    notificacion.textContent = `${err.message}`;
+    notificacion.classList.remove('invisible');
+
+    return;
   }
 };
 
@@ -40,23 +47,9 @@ const verificarNumeroValido = (numero) => {
     throw new Error('Error, el dato ingresado no es un numero ');
   }
 };
-const verificarTamanioString = (pass) => {
-  let tamañoCadena = pass.length;
-  if (tamañoCadena > 8 || tamañoCadena < 1) {
-    throw new Error('Error, numero de caracteres no valido');
-  } else if (tamañoCadena === 8) {
-    return pass;
-  } else {
-    throw new Error('Error, numero de caracteres no valido');
-  }
-};
-const verificarEspaciosVacios = (pass) => {
-  let numeroEspacios = pass.split(' ');
-  let tamanioArreglo = numeroEspacios.length;
-  if (tamanioArreglo >= 2) {
-    throw new Error('Error, la cadena contiene espacios en blanco');
-  }
-  return pass;
+
+const verificarEspaciosVacios = (numeroDeCuenta, contra) => {
+  if (!numeroDeCuenta || !contra) throw new Error('Has dejado espacios vacios');
 };
 
 //api fetch
@@ -74,6 +67,7 @@ const getDatos = async (url, opciones) => {
 
     return json;
   } catch (e) {
-    mensaje.textContent = `No tienes acceso al sistema, verifica los datos`;
+    notificacion.textContent = `No tienes acceso al sistema, verifica los datos`;
+    notificacion.classList.remove('invisible');
   }
 };

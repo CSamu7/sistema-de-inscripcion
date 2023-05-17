@@ -1,3 +1,19 @@
+
+CREATE DATABASE sistema_de_inscripcion;
+
+use sistema_de_inscripcion;
+
+CREATE TABLE usuario(
+	numero_de_cuenta int not null auto_increment,
+	contrasenia varbinary(128) not null,
+  nombre varchar(40) not null,
+  apellido_paterno varchar(50) not null,
+	apellido_materno varchar(50) not null,
+	es_admin boolean not null,
+    
+  PRIMARY KEY (numero_de_cuenta)
+);
+
 CREATE TABLE `grupo` (
   `#Grupo` int NOT NULL,
   `Cantidad_alumnos` int NOT NULL,
@@ -7,14 +23,5 @@ CREATE TABLE `grupo` (
   UNIQUE KEY `#Grupo_UNIQUE` (`#Grupo`)
 ) 
 
-CREATE TABLE `alumnos` (
-  `#Cuenta` int NOT NULL,
-  `Contraseña` int NOT NULL,
-  `Nombre` varchar(15) NOT NULL,
-  `Segundo Nombre` varchar(15) DEFAULT NULL,
-  `Apellido paterno` varchar(20) NOT NULL,
-  `Apellido materno` varchar(20) NOT NULL,
-  `Admin` tinyint(1) NOT NULL,
-  PRIMARY KEY (`#Cuenta`),
-  UNIQUE KEY `#Cuenta_UNIQUE` (`#Cuenta`)
-)
+
+INSERT INTO usuario (contrasenia, nombre, apellido_paterno, apellido_materno, es_admin) VALUES (aes_encrypt("hola", "secretkey21") ,"Oscar Samuel", "Pérez", "De Gante", 1);

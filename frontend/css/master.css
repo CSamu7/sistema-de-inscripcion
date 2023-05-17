@@ -162,3 +162,12 @@ body {
 .login-box a:hover {
   color: #fff;
 }
+
+.form__notificacion {
+  color: red;
+}
+
+.invisible{
+  display: none;
+  opacity: 0;
+}

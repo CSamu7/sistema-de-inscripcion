@@ -19,6 +19,8 @@ controladorUsuario.autenticarUsuario = async (req, res) => {
 
     const token = await generarToken(usuario.conseguirNumeroDeCuenta());
 
+    res.set('Authorization', token);
+
     return res.status(200).json({
       token
     });

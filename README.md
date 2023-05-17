@@ -1,3 +1,4 @@
+# Descripción
 Sistema de inscripción escolar.
 
 # Roles
@@ -44,7 +45,8 @@ Instalar todas las dependencias:
 1. MySQL
 
 # Autores
-
-- CSamu7
+- CSamu7.
+- Nesnardo
+- SebasRodzSanz
   
 

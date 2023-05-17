@@ -27,6 +27,13 @@ class Usuario {
       this.numeroDeCuenta
     ]);
 
+    if (rows.length === 0)
+      return [
+        {
+          numero_de_cuenta: 0
+        }
+      ];
+
     return rows;
   }
 }

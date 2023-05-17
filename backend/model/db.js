@@ -1,4 +1,4 @@
-const mysql = require("mysql2/promise");
+const mysql = require('mysql2/promise');
 
 class BaseDeDatos {
   constructor() {}
@@ -8,7 +8,7 @@ class BaseDeDatos {
       host: process.env.HOST,
       user: process.env.USER,
       database: process.env.DATABASE,
-      password: process.env.PASSWORD,
+      password: process.env.PASSWORD
     });
   }
 }

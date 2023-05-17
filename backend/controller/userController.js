@@ -1,15 +1,33 @@
-const userController = {};
+const generarToken = require("../helpers/generar-token");
+const validarUsuario = require("../helpers/validar-usuario");
+const Usuario = require("../model/user.model");
 
-userController.getUser = (req, res) => {
-  res.send("Hola");
+const controladorUsuario = {};
+
+controladorUsuario.consultarUsuario = async (req, res) => {};
+
+controladorUsuario.autenticarUsuario = async (req, res) => {
+  const { numeroDeCuenta, contrasenia } = req.body;
+
+  const usuario = new Usuario(numeroDeCuenta, contrasenia);
+  const data = await usuario.consultarUsuario();
+
+  const usuarioEnDb = new Usuario(
+    data[0].numero_de_cuenta,
+    data[0].contrasenia
+  );
+
+  try {
+    validarUsuario(usuario, usuarioEnDb);
+
+    const token = await generarToken(usuario.conseguirNumeroDeCuenta());
+
+    return res.status(200).json({
+      token,
+    });
+  } catch (error) {
+    return res.status(400).json(error);
+  }
 };
 
-userController.postUser = (req, res) => {
-  res.send();
-};
-
-userController.patchUser = (req, res) => {
-  res.send();
-};
-
-module.exports = userController;
+module.exports = controladorUsuario;

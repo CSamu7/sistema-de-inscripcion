@@ -1,4 +1,4 @@
-const BaseDeDatos = require("./db");
+const BaseDeDatos = require('./db');
 
 class Usuario {
   numeroDeCuenta;
@@ -24,7 +24,7 @@ class Usuario {
 
     const [rows] = await conexion.execute(query, [
       process.env.DATABASE_SECRET_KEY,
-      this.numeroDeCuenta,
+      this.numeroDeCuenta
     ]);
 
     return rows;

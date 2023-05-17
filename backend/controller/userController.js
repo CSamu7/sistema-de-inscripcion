@@ -1,6 +1,6 @@
-const generarToken = require("../helpers/generar-token");
-const validarUsuario = require("../helpers/validar-usuario");
-const Usuario = require("../model/user.model");
+const generarToken = require('../helpers/generar-token');
+const validarUsuario = require('../helpers/validar-usuario');
+const Usuario = require('../model/user.model');
 
 const controladorUsuario = {};
 
@@ -20,12 +20,12 @@ controladorUsuario.autenticarUsuario = async (req, res) => {
     const token = await generarToken(usuario.conseguirNumeroDeCuenta());
 
     return res.status(200).json({
-      token,
+      token
     });
   } catch (error) {
     return res.status(401).json({
       status: 401,
-      description: error.message,
+      description: error.message
     });
   }
 };

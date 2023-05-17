@@ -1,5 +1,5 @@
 const validarUsuario = (usuario1, usuario2) => {
-  if (usuario1.conseguirContrasenia() !== usuario2.conseguirContrasenia())
+  if (usuario1.conseguirContra() !== usuario2.conseguirContra())
     throw new Error("Contraseña incorrecta");
 };
 

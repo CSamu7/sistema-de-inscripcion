@@ -7,15 +7,12 @@ const controladorUsuario = {};
 controladorUsuario.consultarUsuario = async (req, res) => {};
 
 controladorUsuario.autenticarUsuario = async (req, res) => {
-  const { numeroDeCuenta, contrasenia } = req.body;
+  const { numeroDeCuenta, contra } = req.body;
 
-  const usuario = new Usuario(numeroDeCuenta, contrasenia);
+  const usuario = new Usuario(numeroDeCuenta, contra);
   const data = await usuario.consultarUsuario();
 
-  const usuarioEnDb = new Usuario(
-    data[0].numero_de_cuenta,
-    data[0].contrasenia
-  );
+  const usuarioEnDb = new Usuario(data[0].numero_de_cuenta, data[0].contra);
 
   try {
     validarUsuario(usuario, usuarioEnDb);
@@ -26,7 +23,10 @@ controladorUsuario.autenticarUsuario = async (req, res) => {
       token,
     });
   } catch (error) {
-    return res.status(400).json(error);
+    return res.status(401).json({
+      status: 401,
+      description: error.message,
+    });
   }
 };
 

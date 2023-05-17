@@ -2,25 +2,25 @@ const BaseDeDatos = require("./db");
 
 class Usuario {
   numeroDeCuenta;
-  contrasenia;
+  contra;
 
-  constructor(numeroDeCuenta, contrasenia) {
+  constructor(numeroDeCuenta, contra) {
     this.numeroDeCuenta = Number(numeroDeCuenta);
-    this.contrasenia = contrasenia;
+    this.contra = contra;
   }
 
   conseguirNumeroDeCuenta() {
     return this.numeroDeCuenta;
   }
 
-  conseguirContrasenia() {
-    return this.contrasenia;
+  conseguirContra() {
+    return this.contra;
   }
 
   async consultarUsuario() {
     const conexion = await BaseDeDatos.conectar();
 
-    const query = `SELECT numero_de_cuenta, cast(aes_decrypt(contrasenia, ?) as char) as contrasenia, nombre, apellido_paterno, apellido_materno, es_admin FROM usuario WHERE numero_de_cuenta = ?`;
+    const query = `SELECT numero_de_cuenta, cast(aes_decrypt(contrasenia, ?) as char) as contra, nombre, apellido_paterno, apellido_materno, es_admin FROM usuario WHERE numero_de_cuenta = ?`;
 
     const [rows] = await conexion.execute(query, [
       process.env.DATABASE_SECRET_KEY,

@@ -73,13 +73,10 @@ p{
   margin-bottom:0;
 }
 
-
-
-
 body {
   margin: 0;
   padding: 0;
- background-image: linear-gradient(rgba(5,7,12,0.50), rgba(5,7,12,0.50)), url("/itec de mexico/imagenes/bg.jpeg"); 
+ background-image: linear-gradient(rgba(5,7,12,0.50), rgba(5,7,12,0.50)), url("/frontend/assets/img/bg.jpeg"); 
   background-size: cover;
   font-family: sans-serif;
   height: 100vh;
@@ -164,7 +161,7 @@ body {
 }
 
 .form__notificacion {
-  color: red;
+  color: #b80f22;
 }
 
 .invisible{

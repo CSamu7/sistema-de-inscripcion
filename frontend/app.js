@@ -21,16 +21,16 @@ const enviarFormulario = async () => {
     body: formData
   });
 
-  notificacion.classList.remove('invisible');
-  notificacion.textContent = 'Has ingresado al sistema';
+  if (!solicitud) return;
 
+  notificacion.classList.remove('invisible');
   return solicitud;
 };
 
 const validarCampos = (numero, pass) => {
   try {
     verificarNumeroValido(numero);
-    verificarEspaciosVacios(pass);
+    verificarEspaciosVacios(numero, pass);
 
     return true;
   } catch (err) {
@@ -58,16 +58,11 @@ const getDatos = async (url, opciones) => {
     let respuesta = await fetch(url, opciones);
     let json = await respuesta.json();
 
-    if (!respuesta.ok) {
-      throw {
-        status: respuesta.status,
-        statusText: respuesta.statusText
-      };
-    }
+    if (!respuesta.ok) throw json;
 
     return json;
   } catch (e) {
-    notificacion.textContent = `No tienes acceso al sistema, verifica los datos`;
+    notificacion.textContent = `${e.status}: ${e.description}`;
     notificacion.classList.remove('invisible');
   }
 };

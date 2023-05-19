@@ -8,7 +8,7 @@ const validarLoginDTO = require('../dto/dto-user');
 
 const usuarioRouter = express.Router();
 
-usuarioRouter.get('/:iduser', consultarUsuario);
+usuarioRouter.get('/:numeroDeCuenta', consultarUsuario);
 
 usuarioRouter.post('/', [multer().none(), validarLoginDTO]);
 usuarioRouter.post('/', autenticarUsuario);

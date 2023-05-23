@@ -15,14 +15,15 @@ CREATE TABLE usuario(
   PRIMARY KEY (numero_de_cuenta)
 );
 
-CREATE TABLE `grupo` (
-  `#Grupo` int NOT NULL,
-  `Cantidad_alumnos` int NOT NULL,
-  `#Cuenta_alumnos` int NOT NULL,
-  `Cupo` int NOT NULL,
-  PRIMARY KEY (`#Grupo`),
-  UNIQUE KEY `#Grupo_UNIQUE` (`#Grupo`)
-) 
-
+CREATE TABLE grupo(
+	id_grupo int not null,
+  cupo tinyint not null,
+  cantidad_alumnos int not null,
+    
+  PRIMARY KEY (id_grupo)
+);
 
 INSERT INTO usuario (contrasenia, nombre, apellido_paterno, apellido_materno, es_admin) VALUES (aes_encrypt("hola", "secretkey21") ,"Oscar Samuel", "Pérez", "De Gante", 1);
+
+INSERT INTO grupo (id_grupo, cupo, cantidad_alumnos) VALUES (1, 30, 0);
+INSERT INTO grupo (id_grupo, cupo, cantidad_alumnos) VALUES (2, 30, 2);

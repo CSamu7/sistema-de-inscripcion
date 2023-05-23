@@ -22,7 +22,7 @@ grupoController.consultarGrupo = async (req, res) => {
 grupoController.consultarTodosLosGrupos = async (req, res) => {
   try {
     const token = req.get('authorization');
-
+    
     await validarTokenJWT(token);
 
     const grupo = await new Grupo().consultarTodosLosGrupos();
@@ -32,7 +32,5 @@ grupoController.consultarTodosLosGrupos = async (req, res) => {
     //TODO: Manejar errores
   }
 };
-
-grupoController.modificarGrupo = (req, res) => {};
 
 module.exports = grupoController;

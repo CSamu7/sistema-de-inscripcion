@@ -36,6 +36,26 @@ class Usuario {
 
     return rows;
   }
+
+  async modificarUsuario(idGrupo) {
+    const conexion = await BaseDeDatos.conectar();
+
+    const query = `UPDATE usuario SET id_grupo = ? WHERE numero_de_cuenta = ?;`;
+
+    const [rows] = await conexion.execute(query, [
+      this.numeroDeCuenta,
+      idGrupo
+    ]);
+
+    if (rows.length === 0)
+      return [
+        {
+          numero_de_cuenta: 0
+        }
+      ];
+
+    return rows;
+  }
 }
 
 module.exports = Usuario;

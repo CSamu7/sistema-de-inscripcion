@@ -54,4 +54,19 @@ controladorUsuario.autenticarUsuario = async (req, res) => {
   }
 };
 
+controladorUsuario.modificarUsuario = async (req, res) => {
+  try {
+    const numeroDeCuenta = req.params.numeroDeCuenta;
+    const token = req.get('authorization');
+
+    console.log(req.body);
+
+    await validarTokenJWT(token);
+
+    const usuario = await new Usuario(numeroDeCuenta).modificarUsuario();
+
+    return res.status(200);
+  } catch (error) {}
+};
+
 module.exports = controladorUsuario;

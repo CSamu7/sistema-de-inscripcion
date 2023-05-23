@@ -1,7 +1,8 @@
 const express = require('express');
 const {
   consultarUsuario,
-  autenticarUsuario
+  autenticarUsuario,
+  modificarUsuario
 } = require('../controller/userController');
 const multer = require('multer');
 const validarLoginDTO = require('../dto/dto-user');
@@ -12,5 +13,7 @@ usuarioRouter.get('/:numeroDeCuenta', consultarUsuario);
 
 usuarioRouter.post('/', [multer().none(), validarLoginDTO]);
 usuarioRouter.post('/', autenticarUsuario);
+
+usuarioRouter.patch('/:numeroDeCuenta', modificarUsuario);
 
 module.exports = usuarioRouter;

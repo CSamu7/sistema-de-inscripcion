@@ -1,30 +1,33 @@
-const form = document.getElementById('form');
+const login = document.getElementById('login');
 const notificacion = document.getElementById('notificacion');
 
-form.addEventListener('submit', (e) => {
+login.addEventListener('submit', (e) => {
   e.preventDefault();
   enviarFormulario();
 });
 
 const enviarFormulario = async () => {
-  const formData = new FormData(form);
+  const loginData = new FormData(login);
 
-  const numeroDeCuenta = formData.get('numeroDeCuenta');
-  const contra = formData.get('contra');
+  const numeroDeCuenta = loginData.get('numeroDeCuenta');
+  const contra = loginData.get('contra');
 
   const datosSonValidos = validarCampos(numeroDeCuenta, contra);
 
   if (!datosSonValidos) return;
 
-  const solicitud = await getDatos('http://localhost:3000/api/v1/user/', {
+  const solicitud = await getDatos('http://localhost:3200/api/v1/user/', {
     method: 'POST',
-    body: formData
+    body: loginData
   });
 
   if (!solicitud) return;
 
   notificacion.classList.remove('invisible');
-  return solicitud;
+
+  localStorage.setItem('token', solicitud.token);
+
+  cambiarDePagina('inscripcion.html');
 };
 
 const validarCampos = (numero, pass) => {
@@ -62,7 +65,18 @@ const getDatos = async (url, opciones) => {
 
     return json;
   } catch (e) {
-    notificacion.textContent = `${e.status}: ${e.description}`;
+    notificacion.textContent = `${e.status || 'Error'}: ${
+      e.description || e.message
+    }`;
     notificacion.classList.remove('invisible');
   }
 };
+
+const cambiarDePagina = (namePage) => {
+  const location = window.location;
+  const newPage = `${location.origin}/frontend/pages/${namePage}`;
+
+  location.href = newPage;
+};
+
+module.exports = getDatos;

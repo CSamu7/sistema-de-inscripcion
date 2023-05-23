@@ -1,6 +1,4 @@
-:root{
 
-}
 
 *, *::after, *::before {
   box-sizing: border-box;
@@ -19,7 +17,7 @@ body{
   background-image: url("../assets/img/bg.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
-  font-family: sans-serif;
+  font-family: 'Roboto';
 }
 
 .header{
@@ -113,6 +111,10 @@ body{
   outline: 0;
   padding: 10px;
   background-color: transparent;
+}
+
+.login__input:required{
+  border-bottom: 1px solid red;
 }
 
 .login__submit{

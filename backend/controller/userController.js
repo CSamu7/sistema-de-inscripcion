@@ -8,6 +8,7 @@ const controladorUsuario = {};
 controladorUsuario.consultarUsuario = async (req, res) => {
   try {
     const token = req.get('authorization');
+
     //FIXME: FALTA VERIFICAR AQUI
     const payload = await validarTokenJWT(token);
 
@@ -52,6 +53,21 @@ controladorUsuario.autenticarUsuario = async (req, res) => {
       description: error.message
     });
   }
+};
+
+controladorUsuario.modificarUsuario = async (req, res) => {
+  try {
+    const numeroDeCuenta = req.params.numeroDeCuenta;
+    const token = req.get('authorization');
+
+    console.log(req.body);
+
+    await validarTokenJWT(token);
+
+    const usuario = await new Usuario(numeroDeCuenta).modificarUsuario();
+
+    return res.status(200);
+  } catch (error) {}
 };
 
 module.exports = controladorUsuario;

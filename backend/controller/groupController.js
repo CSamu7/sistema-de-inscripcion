@@ -33,6 +33,4 @@ grupoController.consultarTodosLosGrupos = async (req, res) => {
   }
 };
 
-grupoController.modificarGrupo = (req, res) => {};
-
 module.exports = grupoController;

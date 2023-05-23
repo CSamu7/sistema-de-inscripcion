@@ -25,6 +25,7 @@ const cargaGrupos = async () => {
   for (const grupo of json) {
     templateOption.querySelector('option').textContent = `${grupo.id_grupo}`;
     templateOption.querySelector('option').value = `${grupo.id_grupo}`;
+    templateOption.querySelector('option').dataset.id=`${grupo.id_grupo}`;
     let clon = templateOption.cloneNode(true);
     fragment.appendChild(clon);
   }
@@ -32,9 +33,7 @@ const cargaGrupos = async () => {
   //Agregamos en el tbody
   for (const grupo of json) {
     templateGrupo.querySelector('th').textContent = `${grupo.id_grupo}`;
-    templateGrupo.querySelectorAll(
-      'td'
-    )[0].textContent = `${grupo.cantidad_alumnos}`;
+    templateGrupo.querySelectorAll('td')[0].textContent = `${grupo.cantidad_alumnos}`;
     templateGrupo.querySelectorAll('td')[1].textContent = `${grupo.cupo}`;
     let clon = templateGrupo.cloneNode(true);
     fragment.appendChild(clon);
@@ -55,9 +54,19 @@ const cargaAlumno = async () => {
   numeroDeCuenta.textContent = `${estudiante.numero_de_cuenta}`;
 };
 
-const enviarConfirmacion = () => {
-  const formularioDatos = new FormData(formulario);
-  let select = formularioDatos.get('slc-grp');
+const enviarConfirmacion = async () => {
+  let index = seleccion.selectedIndex;
+  let select= seleccion.options[index];
+  let id = select.dataset.id;//obtenemos el id del grupo para enviarlo
+
+  const enviar = await getDatos('http://localhost:3200/api/v1/user/1', {
+    method:'PUT'
+    headers: {
+      authorization: localStorage.getItem('token')
+    });
+    body:JSON.stringify({
+      id_grupo:id
+    })
 };
 /*addEventListener*/
 document.addEventListener('DOMContentLoaded', (e) => {
@@ -66,5 +75,5 @@ document.addEventListener('DOMContentLoaded', (e) => {
 });
 formulario.addEventListener('submit', (e) => {
   e.preventDefault();
-  enviarConfirmacion();
+  //enviarConfirmacion();
 });

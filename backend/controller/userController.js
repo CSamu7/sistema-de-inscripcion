@@ -8,7 +8,6 @@ const controladorUsuario = {};
 controladorUsuario.consultarUsuario = async (req, res) => {
   try {
     const token = req.get('authorization');
-
     //FIXME: FALTA VERIFICAR AQUI
     const payload = await validarTokenJWT(token);
 

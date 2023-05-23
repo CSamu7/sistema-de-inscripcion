@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ITEC de México | Inscripción</title>
+    <link rel="stylesheet" href="/frontend/css/inscripcion.css" />
+  </head>
+  <body>
+    <div class="root">
+      <header class="header">
+        <img
+          src="/frontend/assets/img/instituto.jpg"
+          alt="Logo Itec de Mexico"
+          class="logo"
+        />
+
+        <h2 class="header__title">Sistema de Inscripción</h2>
+      </header>
+      <main class="main">
+        <div id="student-data" class="student-data">
+          <p>
+            Bienvenido
+            <span id="student-name" class="student-name"></span>
+          </p>
+          <p>
+            Numero de cuenta:
+            <span id="student-account" class="student-account"></span>
+          </p>
+        </div>
+        <table id="tabla-uno" class="table">
+          <thead>
+            <tr>
+              <th class="table__cell">Id Grupo</th>
+              <th class="table__cell">Alumnos Registrados</th>
+              <th class="table__cell">Cupos</th>
+            </tr>
+          </thead>
+          <tbody id="tbody" class="table__body"></tbody>
+        </table>
+        <form id="formulario-ins" class="form">
+          <label class="form__label">Selecciona un grupo: </label>
+          <select name="slc-grp" id="select-grupos" class="form__select">
+            <option value="null" class="form__option">
+              Selecciona un grupo!!!
+            </option>
+          </select>
+          <input
+            type="submit"
+            value="Confrimación"
+            name="enviar"
+            class="form__input"
+          />
+        </form>
+        <p id="notificacion">Todo en orden, siga con su inscripcion</p>
+      </main>
+    </div>
+
+    <template id="template-option">
+      <option value="Matemáticas-I">Matemáticas I</option>
+    </template>
+    <template id="template-grupo">
+      <tr>
+        <th id="id-grupo" class="table__cell">10013</th>
+        <td id="alum-registro" class="table__cell">9</td>
+        <td id="cupo" class="table__cell">24 max.</td>
+      </tr>
+    </template>
+
+    <script
+      type="text/javascript"
+      src="/frontend/scripts/inscripcion-logica.js"
+    ></script>
+  </body>
+</html>

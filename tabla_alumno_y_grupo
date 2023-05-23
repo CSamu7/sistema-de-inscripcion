@@ -10,7 +10,7 @@ CREATE TABLE usuario(
   apellido_paterno varchar(50) not null,
 	apellido_materno varchar(50) not null,
 	es_admin boolean not null,
-  id_grupo int 
+  id_grupo int,
   
   PRIMARY KEY (numero_de_cuenta)
 );

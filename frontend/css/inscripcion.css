@@ -53,8 +53,8 @@ body{
   border: 2px solid #333;
 }
 
-.table__cell:nth-child(odd){
-  background-color: #0096FB
+.table__row:nth-child(odd){
+  background-color: #DEF1FF
 }
 
 .form{

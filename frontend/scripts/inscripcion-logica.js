@@ -1,29 +1,16 @@
+import { getDatos } from '../helpers/get-datos.js';
+
 /*constantes del documento*/
 const formulario = document.getElementById('formulario-ins');
 const tbody = document.getElementById('tbody');
 const seleccion = document.getElementById('select-grupos');
-const span_nombre = document.getElementById('student-name');
-const span_cuenta = document.getElementById('student-account');
+const nombreDeAlumno = document.getElementById('student-name');
+const numeroDeCuenta = document.getElementById('student-account');
 const templateOption = document.getElementById('template-option').content;
 const templateGrupo = document.getElementById('template-grupo').content;
 const notificacion = document.getElementById('notificacion');
 const fragment = document.createDocumentFragment();
 /*funciones */
-const getDatos = async (url, opciones) => {
-  try {
-    let respuesta = await fetch(url, opciones);
-    let json = await respuesta.json();
-
-    if (!respuesta.ok) throw json;
-
-    return json;
-  } catch (e) {
-    notificacion.textContent = `${e.status || 'Error'}: ${
-      e.description || e.message
-    }`;
-    notificacion.classList.remove('invisible');
-  }
-};
 
 const cargaGrupos = async () => {
   const json = await getDatos('http://localhost:3200/api/v1/grupo', {
@@ -31,6 +18,8 @@ const cargaGrupos = async () => {
       authorization: localStorage.getItem('token')
     }
   });
+
+  console.log(json);
 
   //Agregamos en el select
   for (const grupo of json) {
@@ -62,8 +51,8 @@ const cargaAlumno = async () => {
 
   const nombreCompleto = `${estudiante.nombre} ${estudiante.apellido_paterno} ${estudiante.apellido_materno}`;
 
-  span_nombre.textContent = `${nombreCompleto}`;
-  span_cuenta.textContent = `${estudiante.numero_de_cuenta}`;
+  nombreDeAlumno.textContent = `${nombreCompleto}`;
+  numeroDeCuenta.textContent = `${estudiante.numero_de_cuenta}`;
 };
 
 const enviarConfirmacion = () => {

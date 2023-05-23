@@ -1,3 +1,5 @@
+import { getDatos } from '../helpers/get-datos.js';
+
 const login = document.getElementById('login');
 const notificacion = document.getElementById('notificacion');
 
@@ -56,27 +58,9 @@ const verificarEspaciosVacios = (numeroDeCuenta, contra) => {
 };
 
 //api fetch
-const getDatos = async (url, opciones) => {
-  try {
-    let respuesta = await fetch(url, opciones);
-    let json = await respuesta.json();
-
-    if (!respuesta.ok) throw json;
-
-    return json;
-  } catch (e) {
-    notificacion.textContent = `${e.status || 'Error'}: ${
-      e.description || e.message
-    }`;
-    notificacion.classList.remove('invisible');
-  }
-};
-
 const cambiarDePagina = (namePage) => {
   const location = window.location;
   const newPage = `${location.origin}/frontend/pages/${namePage}`;
 
   location.href = newPage;
 };
-
-module.exports = getDatos;

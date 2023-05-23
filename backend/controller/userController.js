@@ -20,11 +20,7 @@ controladorUsuario.consultarUsuario = async (req, res) => {
     res.status(200).json(datosDeUsuario);
   } catch (error) {
     //FIXME: Poner mensajes en español
-    return res.status(403).json({
-      status: 403,
-      description: error.message,
-      error: true
-    });
+    return res.status(401).json(error);
   }
 };
 

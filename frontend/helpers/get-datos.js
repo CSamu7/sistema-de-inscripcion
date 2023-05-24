@@ -1,4 +1,4 @@
-const getDatos = async (url, opciones) => {
+const getDatos = async (url, opciones, error) => {
   try {
     let respuesta = await fetch(url, opciones);
     let json = await respuesta.json();
@@ -9,10 +9,7 @@ const getDatos = async (url, opciones) => {
   } catch (e) {
     console.log(e);
 
-    notificacion.textContent = `${e.status || 'Error'}: ${
-      e.description || e.message
-    }`;
-    notificacion.classList.remove('invisible');
+    error(e)
   }
 };
 

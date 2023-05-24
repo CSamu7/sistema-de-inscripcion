@@ -89,3 +89,20 @@ body{
 .form__option{
   background-color: #CCE8E5;
 }
+
+/*modal*/
+#modal::backdrop{
+      background-color: rgba(0, 0, 0, .55);
+    }
+#modal h2{
+      text-align: center;
+      background-color: skyblue;
+    }
+#modal p{
+      font-family: serif;
+    }
+#modal button{
+      font-family: serif;
+      background-color: white;
+      color: black;
+    }

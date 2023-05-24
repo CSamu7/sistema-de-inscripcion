@@ -9,6 +9,8 @@ const numeroDeCuenta = document.getElementById('student-account');
 const templateOption = document.getElementById('template-option').content;
 const templateGrupo = document.getElementById('template-grupo').content;
 const notificacion = document.getElementById('notificacion');
+const modal = document.getElementById('modal');
+const btnModal = document.getElementById('btn-modal');
 const fragment = document.createDocumentFragment();
 /*funciones */
 
@@ -17,7 +19,7 @@ const cargaGrupos = async () => {
     headers: {
       authorization: localStorage.getItem('token')
     }
-  });
+  },fallo);
 
   console.log(json);
 
@@ -50,7 +52,7 @@ const cargaAlumno = async () => {
     headers: {
       authorization: localStorage.getItem('token')
     }
-  }); //información del alumno
+  },fallo); //información del alumno
 
   const nombreCompleto = `${estudiante.nombre} ${estudiante.apellido_paterno} ${estudiante.apellido_materno}`;
 
@@ -76,9 +78,27 @@ const enviarConfirmacion = async () => {
       'content-type': 'application/json'
     },
     body: JSON.stringify(body)
-  });
+  },fallo);
 
   console.log(enviar);
+};
+const fallo = (e)=>{
+  console.log(e);
+  if(e.estatus===401){
+    let message = e.statusText || 'Algo salio mal';
+    notificacion.textContent="Error, en la carga de grupos";
+    modal.querySelectorAll('p')[0].textContent=`${message}`
+    modal.showModal();
+  }else{
+     notificacion.textContent = `${e.status || 'Error'}: ${e.description || e.message }`;
+    notificacion.classList.remove('invisible');
+  }
+}
+const cambiarDePagina = (namePage) => {
+  const location = window.location;
+  const newPage = `${location.origin}/frontend/pages/${namePage}`;
+
+  location.href = newPage;
 };
 /*addEventListener*/
 document.addEventListener('DOMContentLoaded', (e) => {
@@ -89,3 +109,8 @@ formulario.addEventListener('submit', (e) => {
   e.preventDefault();
   enviarConfirmacion();
 });
+btnModal.addEventListener('click',(e)=>{
+    modal.close();
+    cambiarDePagina('inicio-de-sesion.html');
+});
+

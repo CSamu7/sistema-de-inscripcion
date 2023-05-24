@@ -18,10 +18,14 @@ const enviarFormulario = async () => {
 
   if (!datosSonValidos) return;
 
-  const solicitud = await getDatos('http://localhost:3200/api/v1/user/', {
-    method: 'POST',
-    body: loginData
-  },fallo);
+  const solicitud = await getDatos(
+    'http://localhost:3200/api/v1/user/',
+    {
+      method: 'POST',
+      body: loginData
+    },
+    fallo
+  );
 
   if (!solicitud) return;
 
@@ -64,16 +68,12 @@ const cambiarDePagina = (namePage) => {
 
   location.href = newPage;
 };
-const fallo = (e)=>{
-  console.log(e);
-  if(e.estatus===401){
-    let message = e.statusText || 'Algo salio mal';
-    notificacion.textContent="Error, en la carga de grupos";
-    modal.querySelectorAll('p')[0].textContent=`${message}`
-    modal.showModal();
-  }else{
-     notificacion.textContent = `${e.status || 'Error'}: ${e.description || e.message }`;
-    notificacion.classList.remove('invisible');
-  }
-}
 
+const fallo = (e) => {
+  if (e.estatus === 401) {
+    let message = e.statusText || 'Algo salio mal';
+    notificacion.textContent = 'Error, en la carga de grupos';
+    modal.querySelectorAll('p')[0].textContent = `${message}`;
+    modal.showModal();
+  }
+};

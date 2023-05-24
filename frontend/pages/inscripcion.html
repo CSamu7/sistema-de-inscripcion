@@ -5,6 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ITEC de México | Inscripción</title>
+    <link
+      rel="shortcut icon"
+      href="../assets/img/logo.png"
+      type="image/x-icon"
+    />
     <link rel="stylesheet" href="/frontend/css/inscripcion.css" />
   </head>
   <body>
@@ -15,7 +20,6 @@
           alt="Logo Itec de Mexico"
           class="logo"
         />
-
         <h2 class="header__title">Sistema de Inscripción</h2>
       </header>
       <main class="main">
@@ -42,9 +46,7 @@
         <form id="formulario-ins" class="form">
           <label class="form__label">Selecciona un grupo: </label>
           <select name="slc-grp" id="select-grupos" class="form__select">
-            <option value="null" class="form__option">
-              No seleccionado
-            </option>
+            <option value="null" class="form__option">No seleccionado</option>
           </select>
           <input
             type="submit"
@@ -53,14 +55,18 @@
             class="form__input"
           />
         </form>
-        <p id="notificacion">Todo en orden, siga con su inscripcion</p>
       </main>
     </div>
-    <dialog  id="modal">
-      <h2>Ups!, hay un error de inicio de sesión</h2>
-      <p>Error(Aqui van  detalles del error)</p>
-      <p>Por favor, inicia sesión para realizar tu proceso de inscipción</p>
-      <button id="btn-modal">Volver a inicio</button>
+    <dialog id="modal" class="modal">
+      <div class="modal__header">
+        <img src="/frontend/assets/img/logo.png" alt="" class="modal__logo" />
+        <h2 class="modal__title">No estas autenticado</h2>
+      </div>
+      <p class="modal__error" id="modal__error">
+
+      </p>
+      <p class="modal__description">Inicia sesión otra vez para autenticarte</p>
+      <button class="btn__modal" id="btn-modal">Volver a inicio</button>
     </dialog>
     <template id="template-option">
       <option value="Matemáticas-I">Matemáticas I</option>

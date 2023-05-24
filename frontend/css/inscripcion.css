@@ -1,108 +1,136 @@
-*, *::after, *::before {
+*,
+*::after,
+*::before {
   box-sizing: border-box;
 }
 
-body{
+body {
   margin: 0;
 }
 
-.root{
-  font-family: sans-serif;
-
+.root {
+  font-family: 'Roboto';
 }
 
-.header{
+.header {
   display: flex;
   align-items: center;
   justify-content: space-around;
 
-  background-color: #F8F9FB;
+  background-color: #f8f9fb;
 
   width: 100%;
   height: 125px;
-  box-shadow: 0px 0px  5px #333;
+  box-shadow: 0px 0px 5px #333;
 }
 
-.logo{
+.logo {
   width: 200px;
 }
 
-.main{
+.main {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
 
-.student-data{
+.student-data {
   font-size: 1.1rem;
   padding: 5px;
   width: 50%;
 }
 
-.student-name, .student-account{
-  font-weight: bold
+.student-name,
+.student-account {
+  font-weight: bold;
 }
 
-.table{
+.table {
   border-collapse: collapse;
 }
 
-.table__cell{
+.table__cell {
   padding: 5px;
   border: 2px solid #333;
 }
 
-.table__row:nth-child(odd){
-  background-color: #DEF1FF
+.table__row:nth-child(odd) {
+  background-color: #def1ff;
 }
 
-.form{
-  margin-top: 100px;
+.form {
+  margin-top: 50px;
   padding: 10px;
 
   display: flex;
   align-items: center;
-  flex-direction: column;
   justify-content: center;
   gap: 10px;
 
-  height: 150px;
-  width: 200px;
-  box-shadow: 0px 0px  5px #333;
+  height: 100px;
+  width: 500px;
+  box-shadow: 0px 0px 5px #333;
 }
 
-.form__input{
+.form__input {
   color: inherit;
-  background-color: #0096FB;
+  background-color: #0096fb;
   border: 0;
   border-radius: 20px;
   padding: 10px;
-  width: 100%;
+  width: 160px;
   cursor: pointer;
 }
 
-.form__select{
+.form__select {
   padding: 10px;
 }
 
-.form__option{
-  background-color: #CCE8E5;
+.form__option {
+  background-color: #cce8e5;
+}
+
+.modal{
+  border: 0;
+  font-family: 'Roboto';
+  border-radius: 10px;
+}
+
+.modal__header{
+  display: flex;
+  align-items: center;
+}
+
+.modal__logo{
+  width: 100px;
+}
+
+.modal::backdrop {
+  background-color: rgba(0, 0, 0, 0.85);
 }
 
 /*modal*/
-#modal::backdrop{
-      background-color: rgba(0, 0, 0, .55);
-    }
-#modal h2{
-      text-align: center;
-      background-color: skyblue;
-    }
-#modal p{
-      font-family: serif;
-    }
-#modal button{
-      font-family: serif;
-      background-color: white;
-      color: black;
-    }
+.modal__title {
+  text-align: center;
+}
+
+.modal__error{
+  text-align: center;
+  margin: 0;
+}
+
+.modal__description{
+  text-align: center;
+}
+
+.btn__modal {
+  width: 100%;
+  padding: 10px;
+  background-color: #0096fb;
+  border: 0;
+  box-shadow: 0px 0px 5px #333;
+  border-radius: 5px;
+  color: white;
+  cursor: pointer;
+}

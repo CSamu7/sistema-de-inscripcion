@@ -7,9 +7,7 @@ const getDatos = async (url, opciones, error) => {
 
     return json;
   } catch (e) {
-    console.log(e);
-
-    error(e)
+    error(e);
   }
 };
 

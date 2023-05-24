@@ -43,8 +43,8 @@ class Usuario {
     const query = `UPDATE usuario SET id_grupo = ? WHERE numero_de_cuenta = ?;`;
 
     const [rows] = await conexion.execute(query, [
-      this.numeroDeCuenta,
-      idGrupo
+      idGrupo,
+      this.numeroDeCuenta
     ]);
 
     if (rows.length === 0)

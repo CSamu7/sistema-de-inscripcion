@@ -4,6 +4,5 @@ const grupoController = require('../controller/groupController');
 const grupoRouter = express.Router();
 
 grupoRouter.get('/', grupoController.consultarTodosLosGrupos);
-grupoRouter.get('/:idGrupo', grupoController.consultarGrupo);
 
 module.exports = grupoRouter;

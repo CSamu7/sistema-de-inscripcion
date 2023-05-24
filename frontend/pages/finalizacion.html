@@ -24,11 +24,22 @@
 
       <h2>Datos</h2>
 
-      <p>Nombre: <span></span></p>
-      <p>Numero de Cuenta <span></span></p>
-      <p>Grupo <span></span></p>
+     <p>Nombre: <span id="nombre-alumno"> Sebas Rodríguez Sánchez</span></p>
+      <p>Numero de Cuenta <span id="no-cuenta">0002231</span></p>
+      <p>Grupo <span id="grupo"></span>10012</p>
+      <button type="button" id="btn-fin">Volver a inicio</button>
+      <p id="notificacion">Revise que sus datos sean correctos</p>
 
     </main>
   </div>
+  <dialog  id="modal">
+      <h2>Ups!, hay un error de inicio de sesión</h2>
+      <p>Error(Aqui van  detalles del error)</p>
+      <p>Por favor, inicia sesión para realizar tu proceso de inscipción</p>
+      <button id="btn-modal">Volver a inicio</button>
+  </dialog>
+
+  <script type="text/javascript" src="final-logica.js"></script>
+
 </body>
 </html>

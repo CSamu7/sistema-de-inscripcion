@@ -53,16 +53,30 @@ controladorUsuario.autenticarUsuario = async (req, res) => {
 controladorUsuario.modificarUsuario = async (req, res) => {
   try {
     const numeroDeCuenta = req.params.numeroDeCuenta;
+    const { idGrupo } = req.body;
     const token = req.get('authorization');
-
-    console.log(req.body);
 
     await validarTokenJWT(token);
 
-    const usuario = await new Usuario(numeroDeCuenta).modificarUsuario();
+    const { affectedRows } = await new Usuario(numeroDeCuenta).modificarUsuario(
+      idGrupo
+    );
 
-    return res.status(200);
-  } catch (error) {}
+    if (affectedRows !== 1)
+      throw {
+        status: 401,
+        description: error.message,
+        error: true
+      };
+
+    return res.status(200).json({
+      status: 200,
+      description: 'El grupo se ha asignado',
+      error: false
+    });
+  } catch (error) {
+    return res.status(error.status).json(error);
+  }
 };
 
 module.exports = controladorUsuario;

@@ -1,3 +1,4 @@
+import { cambiarDePagina } from '../helpers/cambiar-pagina.js';
 import { getDatos } from '../helpers/get-datos.js';
 
 const login = document.getElementById('login');
@@ -59,14 +60,6 @@ const verificarNumeroValido = (numero) => {
 
 const verificarEspaciosVacios = (numeroDeCuenta, contra) => {
   if (!numeroDeCuenta || !contra) throw new Error('Has dejado espacios vacios');
-};
-
-//api fetch
-const cambiarDePagina = (namePage) => {
-  const location = window.location;
-  const newPage = `${location.origin}/frontend/pages/${namePage}`;
-
-  location.href = newPage;
 };
 
 const fallo = (e) => {

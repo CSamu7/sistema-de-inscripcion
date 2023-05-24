@@ -1,3 +1,4 @@
+import { cambiarDePagina } from '../helpers/cambiar-pagina.js';
 import { getDatos } from '../helpers/get-datos.js';
 
 /*constantes del documento*/
@@ -14,14 +15,24 @@ const btnModal = document.getElementById('btn-modal');
 const fragment = document.createDocumentFragment();
 /*funciones */
 
-const cargaGrupos = async () => {
-  const json = await getDatos('http://localhost:3200/api/v1/grupo', {
-    headers: {
-      authorization: localStorage.getItem('token')
-    }
-  },fallo);
+const fallo = (e) => {
+  if (e.status === 401) {
+    let message = e.description || 'Algo salio mal';
+    modal.querySelectorAll('p')[0].textContent = `${message}`;
+    modal.showModal();
+  }
+};
 
-  console.log(json);
+const cargaGrupos = async () => {
+  const json = await getDatos(
+    'http://localhost:3200/api/v1/grupo',
+    {
+      headers: {
+        authorization: localStorage.getItem('token')
+      }
+    },
+    fallo
+  );
 
   //Agregamos en el select
   for (const grupo of json) {
@@ -48,11 +59,15 @@ const cargaGrupos = async () => {
 };
 
 const cargaAlumno = async () => {
-  const [estudiante] = await getDatos('http://localhost:3200/api/v1/user/1', {
-    headers: {
-      authorization: localStorage.getItem('token')
-    }
-  },fallo); //información del alumno
+  const [estudiante] = await getDatos(
+    'http://localhost:3200/api/v1/user/1',
+    {
+      headers: {
+        authorization: localStorage.getItem('token')
+      }
+    },
+    fallo
+  ); //información del alumno
 
   const nombreCompleto = `${estudiante.nombre} ${estudiante.apellido_paterno} ${estudiante.apellido_materno}`;
 
@@ -69,48 +84,34 @@ const enviarConfirmacion = async () => {
     idGrupo
   };
 
-  console.log(body);
-
-  const enviar = await getDatos('http://localhost:3200/api/v1/user/1', {
-    method: 'PATCH',
-    headers: {
-      authorization: localStorage.getItem('token'),
-      'content-type': 'application/json'
+  await getDatos(
+    'http://localhost:3200/api/v1/user/1',
+    {
+      method: 'PATCH',
+      headers: {
+        authorization: localStorage.getItem('token'),
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(body)
     },
-    body: JSON.stringify(body)
-  },fallo);
+    fallo
+  );
 
-  console.log(enviar);
+  cambiarDePagina('finalizacion.html');
 };
-const fallo = (e)=>{
-  console.log(e);
-  if(e.estatus===401){
-    let message = e.statusText || 'Algo salio mal';
-    notificacion.textContent="Error, en la carga de grupos";
-    modal.querySelectorAll('p')[0].textContent=`${message}`
-    modal.showModal();
-  }else{
-     notificacion.textContent = `${e.status || 'Error'}: ${e.description || e.message }`;
-    notificacion.classList.remove('invisible');
-  }
-}
-const cambiarDePagina = (namePage) => {
-  const location = window.location;
-  const newPage = `${location.origin}/frontend/pages/${namePage}`;
 
-  location.href = newPage;
-};
 /*addEventListener*/
 document.addEventListener('DOMContentLoaded', (e) => {
   cargaGrupos();
   cargaAlumno();
 });
+
 formulario.addEventListener('submit', (e) => {
   e.preventDefault();
   enviarConfirmacion();
 });
-btnModal.addEventListener('click',(e)=>{
-    modal.close();
-    cambiarDePagina('inicio-de-sesion.html');
-});
 
+btnModal.addEventListener('click', (e) => {
+  modal.close();
+  cambiarDePagina('inicio-de-sesion.html');
+});

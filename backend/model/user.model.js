@@ -20,7 +20,7 @@ class Usuario {
   async consultarUsuario() {
     const conexion = await BaseDeDatos.conectar();
 
-    const query = `SELECT numero_de_cuenta, cast(aes_decrypt(contrasenia, ?) as char) as contra, nombre, apellido_paterno, apellido_materno, es_admin FROM usuario WHERE numero_de_cuenta = ?`;
+    const query = `SELECT numero_de_cuenta, cast(aes_decrypt(contra, ?) as char) as contra, nombre, apellido_paterno, apellido_materno, es_admin, id_grupo FROM usuario WHERE numero_de_cuenta = ?`;
 
     const [rows] = await conexion.execute(query, [
       process.env.DATABASE_SECRET_KEY,

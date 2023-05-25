@@ -5,7 +5,7 @@ use sistema_de_inscripcion;
 
 CREATE TABLE usuario(
 	numero_de_cuenta int not null auto_increment,
-	contrasenia varbinary(128) not null,
+	contra varbinary(128) not null,
   nombre varchar(40) not null,
   apellido_paterno varchar(50) not null,
 	apellido_materno varchar(50) not null,
@@ -23,7 +23,7 @@ CREATE TABLE grupo(
   PRIMARY KEY (id_grupo)
 );
 
-INSERT INTO usuario (contrasenia, nombre, apellido_paterno, apellido_materno, es_admin) VALUES (aes_encrypt("hola", "secretkey21") ,"Oscar Samuel", "Pérez", "De Gante", 1);
+INSERT INTO usuario (contra, nombre, apellido_paterno, apellido_materno, es_admin) VALUES (aes_encrypt("hola", "secretkey21") ,"Oscar Samuel", "Pérez", "De Gante", 1);
 
 INSERT INTO grupo (id_grupo, cupo, cantidad_alumnos) VALUES (1, 30, 0);
 INSERT INTO grupo (id_grupo, cupo, cantidad_alumnos) VALUES (2, 30, 2);

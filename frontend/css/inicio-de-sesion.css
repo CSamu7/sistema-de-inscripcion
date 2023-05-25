@@ -130,8 +130,11 @@ body{
 
 .notificacion{
   position: absolute;
-  bottom: 50px;
-  color: red;
+  bottom: 30px;
+  color: white;
+  background-color: #303030;
+  padding: 20px;
+  border-radius: 10px;
   margin: 0;
 }
 

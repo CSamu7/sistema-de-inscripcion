@@ -4,42 +4,59 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../css/finalizacion.css">
     <title>ITEC de México | Inscripción</title>
-    <link rel="shortcut icon" href="../assets/img/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="/frontend/css/inscripcion.css" />
+    <link
+      rel="shortcut icon"
+      href="../assets/img/logo.png"
+      type="image/x-icon"
+    />
+
   </head>
-<body>
-  <div class="root">
-    <header class="header">
-      <img
-        src="/frontend/assets/img/instituto.jpg"
-        alt="Logo Itec de Mexico"
-        class="logo"
-      />
+  <body>
+    <div class="root">
+      <header class="header">
+        <img
+          src="/frontend/assets/img/instituto.jpg"
+          alt="Logo Itec de Mexico"
+          class="logo"
+        />
 
-      <h2 class="header__title">Sistema de Inscripción</h2>
-    </header>
-    <main class="main">
-      <h1>Has finalizado tu inscripción</h1>
+        <h2 class="header__title">Sistema de Inscripción</h2>
+      </header>
+      <main class="main">
+        <h1>Has finalizado tu inscripción</h1>
 
-      <h2>Datos</h2>
+        <h2>Datos</h2>
 
-     <p>Nombre: <span id="nombre-alumno"> Sebas Rodríguez Sánchez</span></p>
-      <p>Numero de Cuenta <span id="no-cuenta">0002231</span></p>
-      <p>Grupo <span id="grupo"></span>10012</p>
-      <button type="button" id="btn-fin">Volver a inicio</button>
-      <p id="notificacion">Revise que sus datos sean correctos</p>
+        <table class="table">
+          <thead>
+            <tr class="table__header">
+              <th class="table__cell">Nombre</th>
+              <th class="table__cell">Numero de Cuenta</th>
+              <th class="table__cell">Grupo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr  class="table__tbody"> 
+              <th id="nombre-alumno" class="table__cell"></th>
+              <th id="no-cuenta" class="table__cell"></th>
+              <th id="grupo" class="table__cell"></th>
+            </tr>
+          </tbody>
+        </table>
 
-    </main>
-  </div>
-  <dialog  id="modal">
+        <button type="button" id="btn-fin" class="btn__return">Volver a inicio</button>
+
+      </main>
+    </div>
+    <dialog id="modal">
       <h2>Ups!, hay un error de inicio de sesión</h2>
-      <p>Error(Aqui van  detalles del error)</p>
+      <p>Error(Aqui van detalles del error)</p>
       <p>Por favor, inicia sesión para realizar tu proceso de inscipción</p>
       <button id="btn-modal">Volver a inicio</button>
-  </dialog>
+    </dialog>
 
-  <script type="text/javascript" src="/frontend/scripts/final-logica.js"></script>
-
-</body>
+    <script type="module" src="/frontend/scripts/final-logica.js"></script>
+  </body>
 </html>

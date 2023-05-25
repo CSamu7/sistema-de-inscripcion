@@ -51,22 +51,22 @@ const validarCampos = (numero, pass) => {
   }
 };
 
-const verificarNumeroValido = (numero) => {
-  let nuevoNumero = parseInt(numero, 10);
-  if (Number.isNaN(nuevoNumero)) {
-    throw new Error('Error, el dato ingresado no es un numero ');
-  }
+const verificarNumeroValido = (numeroDeCuenta) => {
+  const regexNumero = /^\d+$/;
+
+  const numeroDeCuentaEsUnNumero = regexNumero.test(numeroDeCuenta);
+
+  if (!numeroDeCuentaEsUnNumero)
+    throw new Error('El numero de cuenta no es un numero');
 };
 
 const verificarEspaciosVacios = (numeroDeCuenta, contra) => {
-  if (!numeroDeCuenta || !contra) throw new Error('Has dejado espacios vacios');
+  if (!numeroDeCuenta || !contra) throw new Error('Los campos estan vacios');
 };
 
 const fallo = (e) => {
-  if (e.estatus === 401) {
-    let message = e.statusText || 'Algo salio mal';
-    notificacion.textContent = 'Error, en la carga de grupos';
-    modal.querySelectorAll('p')[0].textContent = `${message}`;
-    modal.showModal();
+  if (e.status === 401) {
+    notificacion.textContent = `${e.status}: ${e.description}`;
+    notificacion.classList.remove('invisible');
   }
 };

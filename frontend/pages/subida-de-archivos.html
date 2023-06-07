@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ITEC de México | Inscripción</title>
+    <link
+      rel="shortcut icon"
+      href="../assets/img/logo.png"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/frontend/css/subida-de-archivos.css" />
+  </head>
+  <body>
+    <div class="root">
+      <header class="header">
+        <img
+          src="/frontend/assets/img/instituto.jpg"
+          alt="Logo Itec de Mexico"
+          class="logo"
+        />
+        <div class="header__step">
+          <h3>Paso 2</h3>
+        </div>
+        <h2 class="header__title">Sistema de Inscripción</h2>
+      </header>
+      <main class="main">
+        <h1 class="title">
+          Subida de archivos
+        </h1>
+        <div class="box-info">
+          <div class="box-requeriment">
+            <p class="box-requeriment__title"> Archivos requeridos</p>
+            <ul class="box-requeriment__list box-requeriment__list--green">
+              <li class="box-requeriment__item">Hoja de inscripción</li>
+              <li class="box-requeriment__item">Comprobante de Pago</li>
+            </ul>
+          </div>
+          <div class="box-requeriment">
+            <p class="box-requeriment__title">Requisitos para cada archivo</p>
+            <ul class="box-requeriment__list box-requeriment__list--red">
+              <li class="box-requeriment__item">Cada archivo debe que pesar menos de 2MB</li>
+              <li class="box-requeriment__item">Los archivos deben que ser PDF</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="drag-and-drop">
+          <form action="" class="form">
+            <label for="archivo" class="form__file">
+              <input type="file" name="archivo" id="archivo" class="form__file--invisible">
+              Subir archivo
+            </label>
+            <input type="submit" value="Enviar archivo" class="btn--form">
+          </form>
+        </div>
+        <div class="arrow">
+          <p>Volver</p>
+        </div>
+
+      </main>
+    </div>
+  </body>

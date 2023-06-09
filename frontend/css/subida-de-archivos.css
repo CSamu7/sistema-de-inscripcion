@@ -136,3 +136,6 @@ body {
   width: 1200px;
   height: 600px;
 }
+.active{
+  opacity: 0.2;
+}

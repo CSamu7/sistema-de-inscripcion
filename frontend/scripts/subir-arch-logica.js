@@ -1,64 +1,91 @@
 //constantes
 const d = document;
-const dropArea = d.querySelector(".drag-and-drop");
-const inputArch = d.querySelector('#archivo');
-const template = d.querySelector('#lista-archivo').content;
+const dropArea = d.querySelector('.drag-and-drop');
+const inputArch = d.getElementById('archivo');
+const template = d.getElementById('file-list-template').content;
 const nodoPadre = d.querySelector('#lista-p');
 const fragmento = d.createDocumentFragment();
-const extencionValida = ['application/pdf'];
-console.log('todo ok');
+const extensionesValidas = ['application/pdf'];
 //funciones
-const dragEnter = (e)=>{
-    //console.log('Dentro del area');
-    e.preventDefault();
-    dropArea.classList.add('active'); 
-}
-const dragLeave = (e)=>{
-   // console.log('Fuera del area');
-    e.preventDefault();
-    dropArea.classList.remove('active'); 
-}
-const dragOver= (e)=>{
-    e.preventDefault();
-}
-const dropFuncion = (e)=>{
-    e.preventDefault();
-    let archivo = e.dataTransfer.files;//Guardamos el archivo del usuario
-    let valido = validarArchivosPdf(archivo[0]);
-    mostrarArchivo(valido);
+
+const byteAMb = (byte) => (byte / 1000000).toFixed(2);
+
+const dragEnter = (e) => {
+  e.preventDefault();
+  dropArea.classList.add('active');
+};
+
+const dragLeave = (e) => {
+  e.preventDefault();
+  dropArea.classList.remove('active');
+};
+
+const dragOver = (e) => {
+  e.preventDefault();
+};
+
+const dropFuncion = (e) => {
+  e.preventDefault();
+  const listaDeArchivos = e.dataTransfer.files;
+
+  try {
+    validarArchivos(listaDeArchivos);
+    mostrarArchivos(listaDeArchivos);
+  } catch (error) {
+    console.log(error);
+  } finally {
     dropArea.classList.remove('active');
-}
-const validarArchivosPdf = (archivo)=>{
-    let tipoArchivo = archivo.type;//extraemos el tipo de archivo 
-    if(extencionValida.includes(tipoArchivo)){
-        console.log('archivo valido');
-        return archivo;
-        //Archivo valido
-    }else{
-        console.log('archivo no valido');
-        return ; 
-        //Archivo no valido
+  }
+};
+
+const validarArchivos = (listaDeArchivos) => {
+  if (listaDeArchivos.length > 2) {
+    throw new Error('Estas añadiendo mas de dos archivos');
+  }
+
+  for (const archivo of listaDeArchivos) {
+    const extensionArchivo = archivo.type;
+    const pesoArchivo = byteAMb(archivo.size);
+
+    if (!extensionesValidas.includes(extensionArchivo)) {
+      throw new Error('El formato es incorrecto');
     }
-}
-const mostrarArchivo = (archivo)=>{
-    if(!archivo){
-        console.log('No hay archivo');
-    }else{
-        console.log('Si hay archivo');
-        template.querySelector('span').textContent = archivo.name;
-        let clone = template.cloneNode(true);
-        fragmento.appendChild(clone);
-        nodoPadre.appendChild(fragmento);
+
+    if (pesoArchivo > 2) {
+      throw new Error('El peso del archivo es mayor a 2MB');
     }
-}
+  }
+
+  return listaDeArchivos;
+};
+
+const mostrarArchivos = (listaDeArchivos) => {
+  if (!archivo) {
+  } else {
+    for (const archivo of listaDeArchivos) {
+      const size = byteAMb(archivo.size);
+
+      template.querySelector('.file-item__img').src =
+        '../assets/img/pdf-logo.png';
+      template.querySelector('.file-item__name').textContent = archivo.name;
+      template.querySelector('.file-item__quantity').textContent = size;
+
+      let clone = template.cloneNode(true);
+      fragmento.appendChild(clone);
+      nodoPadre.appendChild(fragmento);
+    }
+  }
+};
+
 //addEventListener
-dropArea.addEventListener('dragenter',dragEnter);
-dropArea.addEventListener('dragleave',dragLeave);
-dropArea.addEventListener('dragover',dragOver);
-dropArea.addEventListener('drop',dropFuncion);
-inputArch.addEventListener('change', (e)=>{
-    let archivo = inputArch.files;
-    console.log('archivo ? : ', archivo);
-    let valido = validarArchivosPdf(archivo[0]);
-    mostrarArchivo(valido);
+dropArea.addEventListener('dragenter', dragEnter);
+dropArea.addEventListener('dragleave', dragLeave);
+dropArea.addEventListener('dragover', dragOver);
+dropArea.addEventListener('drop', dropFuncion);
+inputArch.addEventListener('change', (e) => {
+  const listaDeArchivos = inputArch.files;
+
+  const losArchivosSonValidos = validarArchivos(listaDeArchivos);
+
+  mostrarArchivos(losArchivosSonValidos);
 });

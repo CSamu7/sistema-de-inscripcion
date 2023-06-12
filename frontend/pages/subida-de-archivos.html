@@ -49,28 +49,37 @@
           </div>
         </div>
 
+        <form action="" class="form">
+          <label for="archivo" class="form__file">
+            <input type="file" name="archivo" id="archivo" class="form__file--invisible">
+            Subir archivo
+          </label>
+        </form>
+
         <div class="drag-and-drop">
-          <form action="" class="form">
-            <label for="archivo" class="form__file">
-              <input type="file" name="archivo" id="archivo" class="form__file--invisible">
-              Subir archivo
-            </label>
-            <input type="submit" value="Enviar archivo" class="btn--form">
-          </form>
+          <div class="list">
+            <ul id="lista-p" class="file-list">
+              
+            </ul>
+          </div>
         </div>
-        <div class="list">
-          <ul id="lista-p"></ul>
-        </div>
-        <div class="arrow">
+        <button>
           <p>Volver</p>
-        </div>
+        </button>
+        <button>
+          <p>Siguiente</p>
+        </button>
       </main>
     </div>
-      <template id="lista-archivo">
-        <li>
-          <span>Nombre.pdf</span>
+
+    <template id="file-list-template">
+        <li class="file-item">
+          <img src="" alt="" class="file-item__img">
+          <h3 class="file-item__name"></h3>
+          <p class="file-item__weight"><span class="file-item__quantity"></span> MB</p>
         </li>
-      </template>
+    </template>
+
     <script src="/frontend/scripts/subir-arch-logica.js"></script>
   </body>
 </html>

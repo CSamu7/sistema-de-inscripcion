@@ -43,10 +43,3 @@ Instalar todas las dependencias:
 
 ## Base de datos
 1. MySQL
-
-# Autores
-- CSamu7.
-- Nesnardo
-- SebasRodzSanz
-  
-

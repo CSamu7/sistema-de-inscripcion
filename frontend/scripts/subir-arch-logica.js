@@ -6,40 +6,17 @@ const template = d.getElementById('file-list-template').content;
 const nodoPadre = d.querySelector('#lista-p');
 const fragmento = d.createDocumentFragment();
 const extensionesValidas = ['application/pdf'];
+const dragAndDropTexto = d.querySelector('.drag-and-drop__text');
+const modal = d.getElementById('modal');
+
 //funciones
 
 const byteAMb = (byte) => (byte / 1000000).toFixed(2);
 
-const dragEnter = (e) => {
-  e.preventDefault();
-  dropArea.classList.add('active');
-};
-
-const dragLeave = (e) => {
-  e.preventDefault();
-  dropArea.classList.remove('active');
-};
-
-const dragOver = (e) => {
-  e.preventDefault();
-};
-
-const dropFuncion = (e) => {
-  e.preventDefault();
-  const listaDeArchivos = e.dataTransfer.files;
-
-  try {
-    validarArchivos(listaDeArchivos);
-    mostrarArchivos(listaDeArchivos);
-  } catch (error) {
-    console.log(error);
-  } finally {
-    dropArea.classList.remove('active');
-  }
-};
-
 const validarArchivos = (listaDeArchivos) => {
-  if (listaDeArchivos.length > 2) {
+  const archivosSubidos = document.querySelectorAll('.file-item');
+
+  if (listaDeArchivos.length > 2 || archivosSubidos.length >= 2) {
     throw new Error('Estas añadiendo mas de dos archivos');
   }
 
@@ -59,7 +36,7 @@ const validarArchivos = (listaDeArchivos) => {
   return listaDeArchivos;
 };
 
-const mostrarArchivos = (listaDeArchivos) => {
+const dibujarArchivos = (listaDeArchivos) => {
   if (!archivo) {
   } else {
     for (const archivo of listaDeArchivos) {
@@ -77,6 +54,40 @@ const mostrarArchivos = (listaDeArchivos) => {
   }
 };
 
+const mostrarArchivos = (listaDeArchivos) => {
+  try {
+    validarArchivos(listaDeArchivos);
+    dibujarArchivos(listaDeArchivos);
+
+    dragAndDropTexto.classList.add('invisible');
+  } catch (error) {
+    console.log(error);
+  } finally {
+    dropArea.classList.remove('active');
+  }
+};
+
+const dragEnter = (e) => {
+  e.preventDefault();
+  dropArea.classList.add('active');
+};
+
+const dragLeave = (e) => {
+  e.preventDefault();
+  dropArea.classList.remove('active');
+};
+
+const dragOver = (e) => {
+  e.preventDefault();
+};
+
+const dropFuncion = (e) => {
+  e.preventDefault();
+  const listaDeArchivos = e.dataTransfer.files;
+
+  mostrarArchivos(listaDeArchivos);
+};
+
 //addEventListener
 dropArea.addEventListener('dragenter', dragEnter);
 dropArea.addEventListener('dragleave', dragLeave);
@@ -85,7 +96,5 @@ dropArea.addEventListener('drop', dropFuncion);
 inputArch.addEventListener('change', (e) => {
   const listaDeArchivos = inputArch.files;
 
-  const losArchivosSonValidos = validarArchivos(listaDeArchivos);
-
-  mostrarArchivos(losArchivosSonValidos);
+  mostrarArchivos(listaDeArchivos);
 });

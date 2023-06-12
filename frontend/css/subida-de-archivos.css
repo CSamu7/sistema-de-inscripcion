@@ -137,9 +137,18 @@ body {
 }
 
 .drag-and-drop {
+  display: flex;
+  flex-direction: column;
   border: 2px dotted #0096fb;
   width: 1200px;
   height: 600px;
+}
+
+.drag-and-drop__text{
+  font-size: 1.2rem;
+  text-align: center;
+  margin-top: auto;
+  margin-bottom: auto;
 }
 
 .file-list{
@@ -174,6 +183,10 @@ body {
 
 .active{
   opacity: 0.2;
+}
+
+.invisible{
+  display: none;
 }
 
 .box-btn{

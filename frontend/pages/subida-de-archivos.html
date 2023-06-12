@@ -34,14 +34,14 @@
         </h1>
         <div class="box-info">
           <div class="box-requeriment">
-            <p class="box-requeriment__title"> Archivos requeridos</p>
+            <h3 class="box-requeriment__title">Archivos requeridos</h3>
             <ul class="box-requeriment__list box-requeriment__list--green">
               <li class="box-requeriment__item">Hoja de inscripción</li>
               <li class="box-requeriment__item">Comprobante de Pago</li>
             </ul>
           </div>
           <div class="box-requeriment">
-            <p class="box-requeriment__title">Requisitos para cada archivo</p>
+            <h3 class="box-requeriment__title">Requisitos para cada archivo</h3>
             <ul class="box-requeriment__list box-requeriment__list--red">
               <li class="box-requeriment__item">Cada archivo debe que pesar menos de 2MB</li>
               <li class="box-requeriment__item">Los archivos deben que ser PDF</li>
@@ -51,12 +51,13 @@
 
         <form action="" class="form">
           <label for="archivo" class="btn">
-            <input type="file" name="archivo" id="archivo" class="form__file--invisible">
+            <input type="file" name="archivo" id="archivo" class="form__file--invisible" multiple>
             Subir archivo
           </label>
         </form>
 
         <div class="drag-and-drop">
+          <p class="drag-and-drop__text">Arrastrar archivos...</p>
           <div class="list">
             <ul id="lista-p" class="file-list">
               
@@ -72,16 +73,27 @@
             <p class="btn__text">Siguiente</p>
           </button>
         </div>
-
-
       </main>
     </div>
+
+    <dialog id="modal" class="modal">
+      <div class="modal__header">
+        <img src="/frontend/assets/img/logo.png" alt="" class="modal__logo" />
+        <h2 class="modal__title">No estas autenticado</h2>
+      </div>
+      <p class="modal__error" id="modal__error">
+
+      </p>
+      <p class="modal__description">Inicia sesión otra vez para autenticarte</p>
+      <button class="btn__modal" id="btn-modal">Volver a inicio</button>
+    </dialog>
 
     <template id="file-list-template">
         <li class="file-item">
           <img src="" alt="" class="file-item__img">
           <h3 class="file-item__name"></h3>
           <p class="file-item__weight"><span class="file-item__quantity"></span> MB</p>
+          <img src="" alt="" class="file-item__img--small">
         </li>
     </template>
 

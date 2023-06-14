@@ -82,17 +82,22 @@ const mostrarArchivos = (listaDeArchivos) => {
     }
   }
 };
-
+const inputFuncion = (e) => {
+  try {
+   const listaDeArchivos = inputArch.files;
+   const losArchivosSonValidos = validarArchivos(listaDeArchivos);
+   mostrarArchivos(losArchivosSonValidos);
+  } catch (error) {
+    console.log(error);
+    let mensaje = error.message || 'Revisa los requisitos de los archivos solicitados';
+    modal.querySelector('p').textContent = mensaje; 
+    modal.showModal();
+  }
+}
 //addEventListener
 dropArea.addEventListener('dragenter', dragEnter);
 dropArea.addEventListener('dragleave', dragLeave);
 dropArea.addEventListener('dragover', dragOver);
 dropArea.addEventListener('drop', dropFuncion);
-inputArch.addEventListener('change', (e) => {
-  const listaDeArchivos = inputArch.files;
-
-  const losArchivosSonValidos = validarArchivos(listaDeArchivos);
-
-  mostrarArchivos(losArchivosSonValidos);
-});
+inputArch.addEventListener('change', inputFuncion);
 btnModal.addEventListener('click',(e)=>{modal.close();});

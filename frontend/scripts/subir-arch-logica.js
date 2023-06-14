@@ -6,6 +6,9 @@ const template = d.getElementById('file-list-template').content;
 const nodoPadre = d.querySelector('#lista-p');
 const fragmento = d.createDocumentFragment();
 const extensionesValidas = ['application/pdf'];
+const modal = d.getElementById('modal');
+const btnModal = d.getElementById('btn-modal');
+
 //funciones
 
 const byteAMb = (byte) => (byte / 1000000).toFixed(2);
@@ -33,6 +36,9 @@ const dropFuncion = (e) => {
     mostrarArchivos(listaDeArchivos);
   } catch (error) {
     console.log(error);
+    let mensaje = error.message || 'Revisa los requisitos de los archivos solicitados';
+    modal.querySelector('p').textContent = mensaje; 
+    modal.showModal();
   } finally {
     dropArea.classList.remove('active');
   }
@@ -89,3 +95,4 @@ inputArch.addEventListener('change', (e) => {
 
   mostrarArchivos(losArchivosSonValidos);
 });
+btnModal.addEventListener('click',(e)=>{modal.close();});

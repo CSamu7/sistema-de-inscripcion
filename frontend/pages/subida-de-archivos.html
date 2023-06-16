@@ -49,9 +49,9 @@
           </div>
         </div>
 
-        <form action="" class="form">
-          <label for="archivo" class="btn">
-            <input type="file" name="archivo" id="archivo" class="form__file--invisible" multiple>
+        <form action="" class="form" id="form-file">
+          <label for="input-file" class="btn">
+            <input type="file" name="file" id="input-file" class="form__file--invisible" multiple>
             Subir archivo
           </label>
         </form>
@@ -69,12 +69,17 @@
           <button class="btn btn-previous">
             <p class="btn__text">Volver</p>
           </button>
-          <button class="btn btn-next">
+          <button class="btn btn-next" id="btn-next">
             <p class="btn__text">Siguiente</p>
           </button>
         </div>
       </main>
     </div>
+    <dialog id="modal" class="modal-error">
+      <h2 class="modal-error__title">Ups!, Hay un error en los archivos</h2>
+      <p class="modal-error__description">(Descripción del error)</p>
+      <button id="btn-modal" class="btn btn--error">Cerrar</button>
+    </dialog>
 
     <dialog id="modal" class="modal">
       <div class="modal__header">
@@ -97,6 +102,6 @@
         </li>
     </template>
 
-    <script src="/frontend/scripts/subir-arch-logica.js"></script>
+    <script src="/frontend/scripts/subir-arch-logica.js" type="module"></script>
   </body>
 </html>

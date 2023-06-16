@@ -196,3 +196,18 @@ body {
   justify-content: space-evenly;
   margin-bottom: 100px;
 }
+
+.modal-error{
+  font-family: "Roboto", sans-serif;
+  border: 0;
+  box-shadow: 0px 0px 5px #333;
+}
+
+.btn--error{
+  width: 100%;
+  background-color: red;
+}
+
+.btn--error:hover{
+  background-color: #B3235C;
+}

@@ -8,7 +8,7 @@ const controladorUsuario = {};
 controladorUsuario.consultarUsuario = async (req, res) => {
   try {
     const token = req.get('authorization');
-    //FIXME: FALTA VERIFICAR AQUI
+
     const payload = await validarTokenJWT(token);
 
     const usuario = new Usuario(payload.payload);
@@ -27,15 +27,20 @@ controladorUsuario.consultarUsuario = async (req, res) => {
 controladorUsuario.autenticarUsuario = async (req, res) => {
   const { numeroDeCuenta, contra } = req.body;
 
-  const usuario = new Usuario(numeroDeCuenta, contra);
-  const data = await usuario.consultarUsuario();
+  const usuarioEnFormulario = new Usuario(numeroDeCuenta, contra);
+  const usuarioEnBD = await usuarioEnFormulario.consultarUsuario();
 
-  const usuarioEnDb = new Usuario(data[0].numero_de_cuenta, data[0].contra);
+  const usuario = new Usuario(
+    usuarioEnBD[0].numero_de_cuenta,
+    usuarioEnBD[0].contra
+  );
 
   try {
-    validarUsuario(usuario, usuarioEnDb);
+    validarUsuario(usuarioEnFormulario, usuario);
 
-    const token = await generarToken(usuario.conseguirNumeroDeCuenta());
+    const token = await generarToken(
+      usuarioEnFormulario.consultarNumeroDeCuenta()
+    );
 
     res.set('Authorization', token);
 
@@ -50,15 +55,12 @@ controladorUsuario.autenticarUsuario = async (req, res) => {
   }
 };
 
-controladorUsuario.modificarUsuario = async (req, res) => {
+controladorUsuario.modificarGrupo = async (req, res) => {
   try {
     const numeroDeCuenta = req.params.numeroDeCuenta;
     const { idGrupo } = req.body;
-    const token = req.get('authorization');
 
-    await validarTokenJWT(token);
-
-    const { affectedRows } = await new Usuario(numeroDeCuenta).modificarUsuario(
+    const { affectedRows } = await new Usuario(numeroDeCuenta).modificarGrupo(
       idGrupo
     );
 
@@ -73,6 +75,20 @@ controladorUsuario.modificarUsuario = async (req, res) => {
       status: 200,
       description: 'El grupo se ha asignado',
       error: false
+    });
+  } catch (error) {
+    return res.status(error.status).json(error);
+  }
+};
+
+controladorUsuario.consultarArchivos = async (req, res) => {
+  try {
+    const numeroDeCuenta = req.params.numeroDeCuenta;
+
+    const archivos = new Usuario(numeroDeCuenta).consultarArchivos();
+
+    return res.status(200).json({
+      archivos
     });
   } catch (error) {
     return res.status(error.status).json(error);

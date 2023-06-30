@@ -12,10 +12,7 @@ archivoController.añadirArchivos = async (req, res) => {
     }
 
     for (const archivo of req.files) {
-      const elArchivoFueSubido = await new FileDB(
-        req.id,
-        archivo
-      ).agregarArchivo();
+      await new FileDB(req.id, archivo).agregarArchivo();
     }
 
     res.status(200).json('Hola');
@@ -23,7 +20,5 @@ archivoController.añadirArchivos = async (req, res) => {
     res.status(error.status).json(error);
   }
 };
-
-archivoController.eliminarArchivo = async (req, res) => {};
 
 module.exports = archivoController;

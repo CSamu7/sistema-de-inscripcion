@@ -19,11 +19,9 @@ const upload = multer({
     filename: async (req, file, cb) => {
       const fileExtension = extname(file.originalname);
       const fileName = file.originalname.split(fileExtension)[0];
-      const uploadDate = Date.now();
+      const filenameUtf8 = Buffer.from(fileName, 'latin1').toString('utf-8');
 
-      req.uploadDate = uploadDate;
-
-      cb(null, `${fileName}-${uploadDate}${fileExtension}`);
+      cb(null, `${filenameUtf8}${fileExtension}`);
     }
   }),
   limits: {

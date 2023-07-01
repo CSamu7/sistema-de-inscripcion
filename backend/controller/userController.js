@@ -1,16 +1,13 @@
+const path = require('path');
 const generarToken = require('../helpers/generar-token');
 const validarUsuario = require('../helpers/validar-usuario');
 const Usuario = require('../model/user.model');
-const validarTokenJWT = require('../helpers/validar-token-jwt');
+const fs = require('fs/promises');
 
 const controladorUsuario = {};
 
 controladorUsuario.consultarUsuario = async (req, res) => {
   try {
-    const token = req.get('authorization');
-
-    const payload = await validarTokenJWT(token);
-
     const usuario = new Usuario(payload.payload);
 
     const datosDeUsuario = await usuario.consultarUsuario();
@@ -19,7 +16,6 @@ controladorUsuario.consultarUsuario = async (req, res) => {
 
     res.status(200).json(datosDeUsuario);
   } catch (error) {
-    //FIXME: Poner mensajes en español
     return res.status(401).json(error);
   }
 };
@@ -84,13 +80,26 @@ controladorUsuario.modificarGrupo = async (req, res) => {
 controladorUsuario.consultarArchivos = async (req, res) => {
   try {
     const numeroDeCuenta = req.params.numeroDeCuenta;
+    const listaDeArchivos = [];
 
-    const archivos = new Usuario(numeroDeCuenta).consultarArchivos();
+    const archivos = await new Usuario(numeroDeCuenta).consultarArchivos();
+
+    for (const archivo of archivos) {
+      const name = archivo.nombre;
+      const size = (await fs.stat(archivo.ruta)).size;
+      const type = 'application/pdf';
+      const link = archivo.ruta;
+
+      const file = { name, size, type, link };
+
+      listaDeArchivos.push(file);
+    }
 
     return res.status(200).json({
-      archivos
+      listaDeArchivos
     });
   } catch (error) {
+    console.log(error);
     return res.status(error.status).json(error);
   }
 };

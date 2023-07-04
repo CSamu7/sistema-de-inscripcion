@@ -6,7 +6,8 @@ const notificacion = document.getElementById('notificacion');
 
 login.addEventListener('submit', (e) => {
   e.preventDefault();
-  enviarFormulario();
+  const usuario = enviarFormulario();
+  inscripcionRealizada(usuario);
 });
 
 const enviarFormulario = async () => {
@@ -31,11 +32,35 @@ const enviarFormulario = async () => {
   if (!solicitud) return;
 
   notificacion.classList.remove('invisible');
+  
+  const usuario = {
+    numeroDeCuenta,
+    solicitud
+  }
+  return usuario;
+};
 
-  localStorage.setItem('token', solicitud.token);
+const inscripcionRealizada = async (usuario)=>{
+  if(!usuario) return ;
+  let id = usuario.numeroDeCuenta;
+  const permiso = getDatos(`
+  http://localhost:3200/api/v1/usuarios/${id}/archivos`,
+  {
+    method: "GET"
+  },fallo);
+
+  if (permiso){ 
+    notificacion.textContent = 'Ya estas inscrito en el sistema';
+    return;
+  } 
+
+  notificacion.classList.remove('invisible');
+
+  localStorage.setItem('token', usuario.solicitud.token);
 
   cambiarDePagina('inscripcion.html');
-};
+
+}
 
 const validarCampos = (numero, pass) => {
   try {

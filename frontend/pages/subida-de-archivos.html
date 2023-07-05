@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ITEC de México | Inscripción</title>
+    <link
+      rel="shortcut icon"
+      href="../assets/img/logo.png"
+      type="image/x-icon"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/frontend/css/subida-de-archivos.css" />
+  </head>
+  <body>
+    <div class="root">
+      <header class="header">
+        <img
+          src="/frontend/assets/img/instituto.jpg"
+          alt="Logo Itec de Mexico"
+          class="logo"
+        />
+        <div class="header__step">
+          <h3>Paso 2</h3>
+        </div>
+        <h2 class="header__title">Sistema de Inscripción</h2>
+      </header>
+      <main class="main">
+        <h1 class="title">
+          Subida de archivos
+        </h1>
+        <div class="box-info">
+          <div class="box-requeriment">
+            <h3 class="box-requeriment__title">Archivos requeridos</h3>
+            <ul class="box-requeriment__list box-requeriment__list--green">
+              <li class="box-requeriment__item">Hoja de inscripción</li>
+              <li class="box-requeriment__item">Comprobante de Pago</li>
+            </ul>
+          </div>
+          <div class="box-requeriment">
+            <h3 class="box-requeriment__title">Requisitos para cada archivo</h3>
+            <ul class="box-requeriment__list box-requeriment__list--red">
+              <li class="box-requeriment__item">Cada archivo debe que pesar menos de 2MB</li>
+              <li class="box-requeriment__item">Los archivos deben que ser PDF</li>
+            </ul>
+          </div>
+        </div>
+
+        <form action="" class="form" id="form-file">
+          <label for="input-file" class="btn">
+            <input type="file" name="file" id="input-file" class="form__file--invisible" multiple>
+            Subir archivo
+          </label>
+        </form>
+
+        <div class="drag-and-drop">
+          <p class="drag-and-drop__text">Arrastrar archivos...</p>
+          <div class="list">
+            <ul id="lista-p" class="file-list">
+              
+            </ul>
+          </div>
+        </div>
+
+        <div class="box-btn">
+          <button class="btn btn-previous">
+            <p class="btn__text">Volver</p>
+          </button>
+          <button class="btn btn-next" id="btn-next">
+            <p class="btn__text">Siguiente</p>
+          </button>
+        </div>
+      </main>
+    </div>
+    <dialog id="modal" class="modal-error">
+      <h2 class="modal-error__title">Ups!, Hay un error en los archivos</h2>
+      <p class="modal-error__description">(Descripción del error)</p>
+      <button id="btn-modal" class="btn btn--error">Cerrar</button>
+    </dialog>
+
+    <dialog id="modal" class="modal">
+      <div class="modal__header">
+        <img src="/frontend/assets/img/logo.png" alt="" class="modal__logo" />
+        <h2 class="modal__title">No estas autenticado</h2>
+      </div>
+      <p class="modal__error" id="modal__error">
+
+      </p>
+      <p class="modal__description">Inicia sesión otra vez para autenticarte</p>
+      <button class="btn__modal" id="btn-modal">Volver a inicio</button>
+    </dialog>
+
+    <template id="file-list-template">
+        <li class="file-item">
+          <img src="" alt="" class="file-item__img">
+          <h3 class="file-item__name"></h3>
+          <p class="file-item__weight"><span class="file-item__quantity"></span> MB</p>
+          <img src="" alt="" class="file-item__img--small">
+        </li>
+    </template>
+
+    <script src="/frontend/scripts/subir-arch-logica.js" type="module"></script>
+  </body>
+</html>

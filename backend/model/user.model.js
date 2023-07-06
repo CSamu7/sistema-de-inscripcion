@@ -27,7 +27,11 @@ class Usuario {
       this.numeroDeCuenta
     ]);
 
-    if (rows.length === 0) throw new Error('No se encontro al usuario');
+    if (rows.length === 0)
+      throw new Error({
+        status: 404,
+        description: 'No se ha encontrado al usuario'
+      });
 
     return rows;
   }
@@ -42,7 +46,12 @@ class Usuario {
       this.numeroDeCuenta
     ]);
 
-    if (rows.length === 0) throw new Error('No se ha modificado el grupo.');
+    if (rows.length === 0)
+      throw new Error({
+        status: 405,
+        description: 'No has sido añadido al grupo'
+      });
+
     return rows;
   }
 

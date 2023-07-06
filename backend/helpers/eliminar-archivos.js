@@ -2,7 +2,7 @@ const { unlink } = require('fs/promises');
 const fs = require('fs');
 const path = require('path');
 
-const eliminarArchivos = async (req, res, next) => {
+const eliminarArchivosEnDirectorio = async (req, res, next) => {
   const directorio = `${process.env.FILES_DESTINATION}${req.id.toString()}`;
 
   const archivosEnDirectorio = fs.readdirSync(directorio);
@@ -14,4 +14,4 @@ const eliminarArchivos = async (req, res, next) => {
   next();
 };
 
-module.exports = eliminarArchivos;
+module.exports = eliminarArchivosEnDirectorio;

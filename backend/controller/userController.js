@@ -1,16 +1,13 @@
+const path = require('path');
 const generarToken = require('../helpers/generar-token');
 const validarUsuario = require('../helpers/validar-usuario');
 const Usuario = require('../model/user.model');
-const validarTokenJWT = require('../helpers/validar-token-jwt');
+const fs = require('fs/promises');
 
 const controladorUsuario = {};
 
 controladorUsuario.consultarUsuario = async (req, res) => {
   try {
-    const token = req.get('authorization');
-    //FIXME: FALTA VERIFICAR AQUI
-    const payload = await validarTokenJWT(token);
-
     const usuario = new Usuario(payload.payload);
 
     const datosDeUsuario = await usuario.consultarUsuario();
@@ -19,7 +16,6 @@ controladorUsuario.consultarUsuario = async (req, res) => {
 
     res.status(200).json(datosDeUsuario);
   } catch (error) {
-    //FIXME: Poner mensajes en español
     return res.status(401).json(error);
   }
 };
@@ -27,15 +23,20 @@ controladorUsuario.consultarUsuario = async (req, res) => {
 controladorUsuario.autenticarUsuario = async (req, res) => {
   const { numeroDeCuenta, contra } = req.body;
 
-  const usuario = new Usuario(numeroDeCuenta, contra);
-  const data = await usuario.consultarUsuario();
+  const usuarioEnFormulario = new Usuario(numeroDeCuenta, contra);
+  const usuarioEnBD = await usuarioEnFormulario.consultarUsuario();
 
-  const usuarioEnDb = new Usuario(data[0].numero_de_cuenta, data[0].contra);
+  const usuario = new Usuario(
+    usuarioEnBD[0].numero_de_cuenta,
+    usuarioEnBD[0].contra
+  );
 
   try {
-    validarUsuario(usuario, usuarioEnDb);
+    validarUsuario(usuarioEnFormulario, usuario);
 
-    const token = await generarToken(usuario.conseguirNumeroDeCuenta());
+    const token = await generarToken(
+      usuarioEnFormulario.consultarNumeroDeCuenta()
+    );
 
     res.set('Authorization', token);
 
@@ -50,15 +51,12 @@ controladorUsuario.autenticarUsuario = async (req, res) => {
   }
 };
 
-controladorUsuario.modificarUsuario = async (req, res) => {
+controladorUsuario.modificarGrupo = async (req, res) => {
   try {
     const numeroDeCuenta = req.params.numeroDeCuenta;
     const { idGrupo } = req.body;
-    const token = req.get('authorization');
 
-    await validarTokenJWT(token);
-
-    const { affectedRows } = await new Usuario(numeroDeCuenta).modificarUsuario(
+    const { affectedRows } = await new Usuario(numeroDeCuenta).modificarGrupo(
       idGrupo
     );
 
@@ -75,6 +73,33 @@ controladorUsuario.modificarUsuario = async (req, res) => {
       error: false
     });
   } catch (error) {
+    return res.status(error.status).json(error);
+  }
+};
+
+controladorUsuario.consultarArchivos = async (req, res) => {
+  try {
+    const numeroDeCuenta = req.params.numeroDeCuenta;
+    const listaDeArchivos = [];
+
+    const archivos = await new Usuario(numeroDeCuenta).consultarArchivos();
+
+    for (const archivo of archivos) {
+      const name = archivo.nombre;
+      const size = (await fs.stat(archivo.ruta)).size;
+      const type = 'application/pdf';
+      const link = archivo.ruta;
+
+      const file = { name, size, type, link };
+
+      listaDeArchivos.push(file);
+    }
+
+    return res.status(200).json({
+      listaDeArchivos
+    });
+  } catch (error) {
+    console.log(error);
     return res.status(error.status).json(error);
   }
 };

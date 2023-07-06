@@ -1,7 +1,7 @@
 const { jwtVerify } = require('jose');
 
 const validarTokenJWT = async (token) => {
-  if (!token) throw new Error('NoJWT');
+  if (!token) throw new Error('No se encontro ningun token');
 
   const encoder = new TextEncoder();
 

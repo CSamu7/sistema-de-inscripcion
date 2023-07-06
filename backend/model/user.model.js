@@ -9,11 +9,11 @@ class Usuario {
     this.contra = contra;
   }
 
-  conseguirNumeroDeCuenta() {
+  consultarNumeroDeCuenta() {
     return this.numeroDeCuenta;
   }
 
-  conseguirContra() {
+  consultarContra() {
     return this.contra;
   }
 
@@ -27,17 +27,12 @@ class Usuario {
       this.numeroDeCuenta
     ]);
 
-    if (rows.length === 0)
-      return [
-        {
-          numero_de_cuenta: 0
-        }
-      ];
+    if (rows.length === 0) throw new Error('No se encontro al usuario');
 
     return rows;
   }
 
-  async modificarUsuario(idGrupo) {
+  async modificarGrupo(idGrupo) {
     const conexion = await BaseDeDatos.conectar();
 
     const query = `UPDATE usuario SET id_grupo = ? WHERE numero_de_cuenta = ?;`;
@@ -47,12 +42,16 @@ class Usuario {
       this.numeroDeCuenta
     ]);
 
-    if (rows.length === 0)
-      return [
-        {
-          numero_de_cuenta: 0
-        }
-      ];
+    if (rows.length === 0) throw new Error('No se ha modificado el grupo.');
+    return rows;
+  }
+
+  async consultarArchivos() {
+    const conexion = await BaseDeDatos.conectar();
+
+    const query = `SELECT * FROM archivo WHERE id_usuario = ?`;
+
+    const [rows] = await conexion.execute(query, [this.numeroDeCuenta]);
 
     return rows;
   }

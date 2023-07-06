@@ -1,4 +1,4 @@
-import { hacerPeticion } from '../helpers/hacer-peticion.js';
+import { getDatos } from '../helpers/get-datos.js';
 
 //constantes
 const d = document;
@@ -111,14 +111,19 @@ const enviarArchivosAServidor = async () => {
   const formData = new FormData();
 
   for (let i = 0; i < archivos.length; i++) {
-    console.log(archivos[i].name);
     formData.append('file', archivos[i], archivos[i].name);
   }
 
-  const peticion = await hacerPeticion('http://localhost:3000/api/v1/file', {
-    body: formData,
-    method: 'POST'
-  });
+  const peticion = await getDatos(
+    'http://localhost:3200/api/v1/archivos/',
+    {
+      body: formData,
+      method: 'POST'
+    },
+    (e) => {
+      console.log(e);
+    }
+  );
 };
 
 //addEventListener

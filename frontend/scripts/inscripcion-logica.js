@@ -97,7 +97,7 @@ const enviarConfirmacion = async () => {
     fallo
   );
 
-  cambiarDePagina('finalizacion.html');
+  cambiarDePagina('subida-de-archivos.html');
 };
 
 /*addEventListener*/

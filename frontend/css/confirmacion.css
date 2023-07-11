@@ -52,39 +52,12 @@ body {
 
   color: white;
 }
+
 .main {
   height: 70vh;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
-}
-
-.table{
-  display: flex;
-  border-collapse: collapse;
-}
-
-.table__cell{
-  padding: 10px;
-}
-
-.table__header, .table__tbody{
-  display: flex;
-  flex-direction: column;
-}
-
-.table__header > .table__cell {
-  background-color: var(--light-blue);
-}
-
-.btn__return {
-  margin-top: 20px;
-  width: 200px;
-  padding: 10px;
-  background-color:var(--blue);
-  border: 0;
-  color: white;
-  cursor: pointer;
 }
 

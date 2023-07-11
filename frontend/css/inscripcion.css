@@ -4,6 +4,14 @@
   box-sizing: border-box;
 }
 
+:root{
+  --light-black: #333;
+  --light-orange: #FFE7D3;
+  --orange: #EC6C2B;
+  --blue: #0096FA;
+  --light-blue: #00B0A5;
+}
+
 body {
   margin: 0;
 }
@@ -13,9 +21,11 @@ body {
 }
 
 .header {
+  position: relative;
+
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   gap: 50px;
 
   background-color: #f8f9fb;
@@ -23,18 +33,38 @@ body {
   width: 100%;
   height: 125px;
   box-shadow: 0px 0px 5px #333;
+  font-size: clamp(.8rem, 2.3vw, 1.1rem);
 }
 
 .logo {
-  width: 200px;
+  width: clamp(150px, 30vw, 200px);
 }
 
+.header__step{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  bottom: -25px;
+
+  background-color: var(--orange);
+  width: clamp(100px, 30vw, 200px);
+  height: 60px;
+
+  color: white;
+}
 .main {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
 }
+
+.title{
+  margin-top: 50px;
+}
+
 
 .student-data {
   font-size: 1.1rem;
@@ -49,30 +79,44 @@ body {
 
 .table {
   border-collapse: collapse;
+
+  width: 300px;
+}
+
+.table__header{
+  background-color: var(--orange);
+  color: white;
+}
+
+.table__body{
+  background-color: var(--light-orange);
 }
 
 .table__cell {
   padding: 15px;
-  border: 2px solid #333;
   text-align: center;
-}
-
-.table__row:nth-child(odd) {
-  background-color: #b9bdf7;
+  font-size: 1rem;
 }
 
 .form {
-  margin-top: 50px;
+  margin-top: 20px;
   padding: 10px;
 
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
-  gap: 10px;
+  gap: 20px;
 
   height: 100px;
   width: 500px;
-  box-shadow: 0px 0px 5px #333;
+}
+
+.form__div{
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
 }
 
 .form__input {
@@ -80,7 +124,7 @@ body {
 
   background-color: #0096fb;
   border: 0;
-  border-radius: 20px;
+
   padding: 10px;
   width: 160px;
   cursor: pointer;
@@ -88,10 +132,6 @@ body {
 
 .form__select {
   padding: 10px;
-}
-
-.form__option {
-  background-color: #cce8e5;
 }
 
 .modal{

@@ -10,19 +10,26 @@
       href="../assets/img/logo.png"
       type="image/x-icon"
     />
-    <link rel="stylesheet" href="/frontend/css/inscripcion.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/inscripcion.css" />
   </head>
   <body>
     <div class="root">
       <header class="header">
         <img
-          src="/frontend/assets/img/instituto.jpg"
+          src="../assets/img/instituto.jpg"
           alt="Logo Itec de Mexico"
           class="logo"
         />
+        <div class="header__step">
+          <h3>Paso 1</h3>
+        </div>
         <h2 class="header__title">Sistema de Inscripción</h2>
       </header>
       <main class="main">
+        <h1 class="title">Escoge tu grupo</h1>
         <div id="student-data" class="student-data">
           <p>
             Bienvenido
@@ -34,20 +41,22 @@
           </p>
         </div>
         <table id="tabla-uno" class="table">
-          <thead>
-            <tr>
-              <th class="table__cell">Id Grupo</th>
-              <th class="table__cell">Alumnos Registrados</th>
-              <th class="table__cell">Cupos</th>
+          <thead class="table__header">
+            <tr >
+              <th class="table__cell">Clave</th>
+              <th class="table__cell">Alumnos Inscritos</th>
+              <th class="table__cell">Cupo</th>
             </tr>
           </thead>
           <tbody id="tbody" class="table__body"></tbody>
         </table>
         <form id="formulario-ins" class="form">
-          <label class="form__label">Selecciona un grupo: </label>
-          <select name="slc-grp" id="select-grupos" class="form__select">
-            <option value="null" class="form__option">No seleccionado</option>
-          </select>
+            <div class="form__div">
+              <label class="form__label">Selecciona un grupo: </label>
+              <select name="slc-grp" id="select-grupos" class="form__select">
+                <option value="null" class="form__option">No seleccionado</option>
+              </select>
+            </div>
           <input
             type="submit"
             value="Confirmar"
@@ -57,6 +66,7 @@
         </form>
       </main>
     </div>
+
     <dialog id="modal" class="modal">
       <div class="modal__header">
         <img src="/frontend/assets/img/logo.png" alt="" class="modal__logo" />
@@ -68,6 +78,7 @@
       <p class="modal__description">Inicia sesión otra vez para autenticarte</p>
       <button class="btn__modal" id="btn-modal">Volver a inicio</button>
     </dialog>
+    
     <template id="template-option">
       <option value="Matemáticas-I">Matemáticas I</option>
     </template>

@@ -8,7 +8,7 @@ const controladorUsuario = {};
 
 controladorUsuario.consultarUsuario = async (req, res) => {
   try {
-    const usuario = new Usuario(payload.payload);
+    const usuario = new Usuario(req.id);
 
     const datosDeUsuario = await usuario.consultarUsuario();
 
@@ -54,8 +54,10 @@ controladorUsuario.autenticarUsuario = async (req, res) => {
 controladorUsuario.modificarGrupo = async (req, res) => {
   try {
     const numeroDeCuenta = req.params.numeroDeCuenta;
+
     const { idGrupo } = req.body;
 
+    console.log(numeroDeCuenta, req.body);
     const { affectedRows } = await new Usuario(numeroDeCuenta).modificarGrupo(
       idGrupo
     );

@@ -1,5 +1,5 @@
 import { cambiarDePagina } from '../helpers/cambiar-pagina.js';
-import { getDatos } from '../helpers/get-datos.js';
+import { realizarPeticion } from '../helpers/realizar-peticion.js';
 /*constantes*/
 const nombre = document.getElementById('nombre-alumno');
 const cuenta = document.getElementById('no-cuenta');
@@ -10,8 +10,8 @@ const btnModal = document.getElementById('btn-modal');
 
 /*Funciones*/
 const cargarAlumno = async () => {
-  const [estudiante] = await getDatos(
-    `http://localhost:3200/api/v1/user/1`,
+  const [estudiante] = await realizarPeticion(
+    `http://localhost:3200/api/v1/usuarios/1`,
     {
       headers: {
         authorization: localStorage.getItem('token')

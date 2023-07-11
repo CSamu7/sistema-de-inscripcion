@@ -1,12 +1,12 @@
 import { cambiarDePagina } from '../helpers/cambiar-pagina.js';
-import { getDatos } from '../helpers/get-datos.js';
+import { realizarPeticion } from '../helpers/realizar-peticion.js';
 
 const login = document.getElementById('login');
 const notificacion = document.getElementById('notificacion');
 
-login.addEventListener('submit', (e) => {
+login.addEventListener('submit', async (e) => {
   e.preventDefault();
-  const usuario = enviarFormulario();
+  const usuario = await enviarFormulario();
   inscripcionRealizada(usuario);
 });
 
@@ -20,47 +20,55 @@ const enviarFormulario = async () => {
 
   if (!datosSonValidos) return;
 
-  const solicitud = await getDatos(
-    'http://localhost:3200/api/v1/user/',
+  const solicitud = await realizarPeticion(
+    'http://localhost:3200/api/v1/usuarios/',
     {
       method: 'POST',
       body: loginData
     },
-    fallo
+    (e) => {
+      console.log(e);
+    }
   );
 
   if (!solicitud) return;
 
   notificacion.classList.remove('invisible');
-  
+
   const usuario = {
     numeroDeCuenta,
     solicitud
-  }
+  };
+
   return usuario;
 };
 
-const inscripcionRealizada = async (usuario)=>{
-  if(!usuario) return ;
-  let id = usuario.numeroDeCuenta;
-  const permiso = getDatos(`
-  http://localhost:3200/api/v1/usuarios/${id}/archivos`,
-  {
-    method: "GET"
-  },fallo);
+const inscripcionRealizada = async (usuario) => {
+  console.log(usuario);
+  if (!usuario) return;
 
-  if (permiso){ 
+  const numeroDeCuenta = usuario.numeroDeCuenta;
+
+  const permiso = await realizarPeticion(
+    `
+  http://localhost:3200/api/v1/usuarios/${numeroDeCuenta}/archivos`,
+    {
+      method: 'GET',
+      authorization: localStorage.getItem('token')
+    },
+    fallo
+  );
+
+  if (permiso) {
     notificacion.textContent = 'Ya estas inscrito en el sistema';
     return;
-  } 
+  }
 
   notificacion.classList.remove('invisible');
-
   localStorage.setItem('token', usuario.solicitud.token);
 
   cambiarDePagina('inscripcion.html');
-
-}
+};
 
 const validarCampos = (numero, pass) => {
   try {

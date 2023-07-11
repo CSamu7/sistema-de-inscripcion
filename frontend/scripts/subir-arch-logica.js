@@ -1,4 +1,5 @@
-import { getDatos } from '../helpers/get-datos.js';
+import { realizarPeticion } from '../helpers/realizar-peticion.js';
+import { cambiarDePagina } from '../helpers/cambiar-pagina.js';
 
 //constantes
 const d = document;
@@ -11,6 +12,7 @@ const modal = d.getElementById('modal');
 const form = d.getElementById('form-file');
 
 const btnNext = document.getElementById('btn-next');
+const btnPrevious = document.getElementById('btn-previous');
 
 const extensionesValidas = ['application/pdf'];
 const archivos = [];
@@ -108,22 +110,35 @@ const enviarArchivosPorDrop = (e) => {
 };
 
 const enviarArchivosAServidor = async () => {
+  try {
+    if (archivos.length <= 2) throw new Error('Debes que añadir dos archivos');
+  } catch (error) {
+    //TODO: Dar el error
+
+    console.log(error);
+  }
+
   const formData = new FormData();
 
   for (let i = 0; i < archivos.length; i++) {
     formData.append('file', archivos[i], archivos[i].name);
   }
 
-  const peticion = await getDatos(
-    'http://localhost:3200/api/v1/archivos/',
+  await realizarPeticion(
+    'http://localhost:3200/api/v1/archivos/1',
     {
       body: formData,
-      method: 'POST'
+      method: 'POST',
+      headers: {
+        authorization: localStorage.getItem('token')
+      }
     },
     (e) => {
       console.log(e);
     }
   );
+
+  // cambiarDePagina('confirmacion.html');
 };
 
 //addEventListener
@@ -136,4 +151,12 @@ btnModal.addEventListener('click', (e) => {
   modal.close();
 });
 
-btnNext.addEventListener('click', enviarArchivosAServidor);
+btnNext.addEventListener('click', async (e) => {
+  e.preventDefault();
+  await enviarArchivosAServidor();
+  // cambiarDePagina('confirmacion.html');
+});
+
+btnPrevious.addEventListener('click', (e) => {
+  cambiarDePagina('inscripcion.html');
+});

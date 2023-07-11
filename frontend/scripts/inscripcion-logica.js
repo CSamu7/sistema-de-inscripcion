@@ -1,5 +1,5 @@
 import { cambiarDePagina } from '../helpers/cambiar-pagina.js';
-import { getDatos } from '../helpers/get-datos.js';
+import { realizarPeticion } from '../helpers/realizar-peticion.js';
 
 /*constantes del documento*/
 const formulario = document.getElementById('formulario-ins');
@@ -23,9 +23,9 @@ const fallo = (e) => {
   }
 };
 
-const cargaGrupos = async () => {
-  const json = await getDatos(
-    'http://localhost:3200/api/v1/grupo',
+const cargarGrupos = async () => {
+  const json = await realizarPeticion(
+    'http://localhost:3200/api/v1/grupos',
     {
       headers: {
         authorization: localStorage.getItem('token')
@@ -58,9 +58,9 @@ const cargaGrupos = async () => {
   tbody.appendChild(fragment);
 };
 
-const cargaAlumno = async () => {
-  const [estudiante] = await getDatos(
-    'http://localhost:3200/api/v1/user/1',
+const cargarAlumno = async () => {
+  const [estudiante] = await realizarPeticion(
+    'http://localhost:3200/api/v1/usuarios/1',
     {
       headers: {
         authorization: localStorage.getItem('token')
@@ -80,19 +80,27 @@ const enviarConfirmacion = async () => {
   let select = seleccion.options[index];
   let idGrupo = select.dataset.id; //obtenemos el id del grupo para enviarlo
 
-  const body = {
-    idGrupo
-  };
+  try {
+    if (!idGrupo) throw new Error('No has seleccionado un grupo');
+  } catch (error) {
+    let message = error.message || 'Algo salio mal';
+    modal.querySelectorAll('p')[0].textContent = `${message}`;
+    modal.showModal();
+    //TODO: ERROR
+    return;
+  }
 
-  await getDatos(
-    'http://localhost:3200/api/v1/user/1',
+  await realizarPeticion(
+    'http://localhost:3200/api/v1/usuarios/1',
     {
       method: 'PATCH',
       headers: {
         authorization: localStorage.getItem('token'),
         'content-type': 'application/json'
       },
-      body: JSON.stringify(body)
+      body: JSON.stringify({
+        idGrupo
+      })
     },
     fallo
   );
@@ -102,8 +110,8 @@ const enviarConfirmacion = async () => {
 
 /*addEventListener*/
 document.addEventListener('DOMContentLoaded', (e) => {
-  cargaGrupos();
-  cargaAlumno();
+  cargarGrupos();
+  cargarAlumno();
 });
 
 formulario.addEventListener('submit', (e) => {

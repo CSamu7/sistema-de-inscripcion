@@ -7,7 +7,7 @@ const notificacion = document.getElementById('notificacion');
 login.addEventListener('submit', async (e) => {
   e.preventDefault();
   const usuario = await enviarFormulario();
-  inscripcionRealizada(usuario);
+  comprobarInscripcion(usuario);
 });
 
 const enviarFormulario = async () => {
@@ -25,15 +25,17 @@ const enviarFormulario = async () => {
     {
       method: 'POST',
       body: loginData
-    },
-    (e) => {
-      console.log(e);
     }
   );
 
-  if (!solicitud) return;
+  if (solicitud.error) {
+    notificacion.classList.remove('invisible');
+    notificacion.textContent = solicitud.description;
 
-  notificacion.classList.remove('invisible');
+    return;
+  }
+
+  localStorage.setItem('token', solicitud.token);
 
   const usuario = {
     numeroDeCuenta,
@@ -43,29 +45,26 @@ const enviarFormulario = async () => {
   return usuario;
 };
 
-const inscripcionRealizada = async (usuario) => {
-  console.log(usuario);
-  if (!usuario) return;
+const comprobarInscripcion = async (usuario) => {
+  // FIXME: La función siempre retorna que el usuario ya esta inscrito en el sistema
+  // if (!usuario) return;
+  // const numeroDeCuenta = usuario.numeroDeCuenta;
 
-  const numeroDeCuenta = usuario.numeroDeCuenta;
+  // console.log(localStorage.getItem('token'));
 
-  const permiso = await realizarPeticion(
-    `
-  http://localhost:3200/api/v1/usuarios/${numeroDeCuenta}/archivos`,
-    {
-      method: 'GET',
-      authorization: localStorage.getItem('token')
-    },
-    fallo
-  );
+  // const permiso = await realizarPeticion(
+  //   `
+  // http://localhost:3200/api/v1/usuarios/${numeroDeCuenta}`,
+  //   {
+  //     method: 'GET',
+  //     headers: {
+  //       authorization: localStorage.getItem('token')
+  //     }
+  //   }
+  // );
 
-  if (permiso) {
-    notificacion.textContent = 'Ya estas inscrito en el sistema';
-    return;
-  }
-
-  notificacion.classList.remove('invisible');
-  localStorage.setItem('token', usuario.solicitud.token);
+  // notificacion.textContent = 'Ya estas inscrito en el sistema';
+  // notificacion.classList.remove('invisible');
 
   cambiarDePagina('inscripcion.html');
 };
@@ -90,16 +89,9 @@ const verificarNumeroValido = (numeroDeCuenta) => {
   const numeroDeCuentaEsUnNumero = regexNumero.test(numeroDeCuenta);
 
   if (!numeroDeCuentaEsUnNumero)
-    throw new Error('El numero de cuenta no es un numero');
+    throw new Error('El numero de cuenta debe que ser un numero');
 };
 
 const verificarEspaciosVacios = (numeroDeCuenta, contra) => {
   if (!numeroDeCuenta || !contra) throw new Error('Los campos estan vacios');
-};
-
-const fallo = (e) => {
-  if (e.status === 401) {
-    notificacion.textContent = `${e.status}: ${e.description}`;
-    notificacion.classList.remove('invisible');
-  }
 };

@@ -1,16 +1,16 @@
-const realizarPeticion = async (url, opciones, error) => {
+const realizarPeticion = async (url, opciones) => {
   try {
-    let respuesta = await fetch(url, opciones);
+    const respuesta = await fetch(url, opciones);
 
-    if (!respuesta.ok)
-      throw { statusText: respuesta.statusText, status: respuesta.status };
+    if (!respuesta.ok) throw { respuesta };
 
-    let json = await respuesta.json();
+    const json = await respuesta.json();
 
     return json;
   } catch (e) {
-    console.log(e);
-    error(e);
+    const mensajeDeError = await e.respuesta.json();
+
+    return mensajeDeError;
   }
 };
 

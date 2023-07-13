@@ -113,7 +113,7 @@ const enviarArchivosAServidor = async () => {
   try {
     if (archivos.length <= 2) throw new Error('Debes que añadir dos archivos');
   } catch (error) {
-    //TODO: Dar el error
+    //TODO: Mostrar el error al usuario
 
     console.log(error);
   }
@@ -125,7 +125,7 @@ const enviarArchivosAServidor = async () => {
   }
 
   await realizarPeticion(
-    'http://localhost:3200/api/v1/archivos/1',
+    'http://localhost:3200/api/v1/archivos',
     {
       body: formData,
       method: 'POST',

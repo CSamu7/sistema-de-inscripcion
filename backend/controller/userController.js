@@ -3,6 +3,7 @@ const generarToken = require('../helpers/generar-token');
 const validarUsuario = require('../helpers/validar-usuario');
 const Usuario = require('../model/user.model');
 const fs = require('fs/promises');
+const { error } = require('console');
 
 const controladorUsuario = {};
 
@@ -23,15 +24,15 @@ controladorUsuario.consultarUsuario = async (req, res) => {
 controladorUsuario.autenticarUsuario = async (req, res) => {
   const { numeroDeCuenta, contra } = req.body;
 
-  const usuarioEnFormulario = new Usuario(numeroDeCuenta, contra);
-  const usuarioEnBD = await usuarioEnFormulario.consultarUsuario();
-
-  const usuario = new Usuario(
-    usuarioEnBD[0].numero_de_cuenta,
-    usuarioEnBD[0].contra
-  );
-
   try {
+    const usuarioEnFormulario = new Usuario(numeroDeCuenta, contra);
+    const usuarioEnBD = await usuarioEnFormulario.consultarUsuario();
+
+    const usuario = new Usuario(
+      usuarioEnBD[0].numero_de_cuenta,
+      usuarioEnBD[0].contra
+    );
+
     validarUsuario(usuarioEnFormulario, usuario);
 
     const token = await generarToken(
@@ -43,21 +44,17 @@ controladorUsuario.autenticarUsuario = async (req, res) => {
     return res.status(200).json({
       token
     });
-  } catch (error) {
-    return res.status(401).json({
-      status: 401,
-      description: error.message
-    });
+  } catch (e) {
+    console.log(e);
+    return res.status(e.status).json(e);
   }
 };
 
 controladorUsuario.modificarGrupo = async (req, res) => {
   try {
     const numeroDeCuenta = req.params.numeroDeCuenta;
-
     const { idGrupo } = req.body;
 
-    console.log(numeroDeCuenta, req.body);
     const { affectedRows } = await new Usuario(numeroDeCuenta).modificarGrupo(
       idGrupo
     );
@@ -69,6 +66,7 @@ controladorUsuario.modificarGrupo = async (req, res) => {
         error: true
       };
 
+    //TODO: Especificar el tipo de mensaje que vamos a enviar
     return res.status(200).json({
       status: 200,
       description: 'El grupo se ha asignado',

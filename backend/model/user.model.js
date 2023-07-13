@@ -28,10 +28,11 @@ class Usuario {
     ]);
 
     if (rows.length === 0)
-      throw new Error({
-        status: 404,
-        description: 'No se ha encontrado al usuario'
-      });
+      throw {
+        status: 401,
+        description: 'La contraseña o el numero de cuenta no es correcto',
+        error: true
+      };
 
     return rows;
   }
@@ -47,10 +48,11 @@ class Usuario {
     ]);
 
     if (rows.length === 0)
-      throw new Error({
+      throw {
         status: 405,
-        description: 'No has sido añadido al grupo'
-      });
+        description: 'No has sido añadido al grupo',
+        error: true
+      };
 
     return rows;
   }
